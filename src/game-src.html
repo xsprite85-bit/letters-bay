@@ -1,6 +1,6 @@
 <title>מפרץ האותיות</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Rubik:wght@400;500;700&family=Noto+Sans+Hebrew:wght@500;700&display=swap">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 /* Layout: one 16:10 stage that holds everything; scenes swap inside it, the companion element persists and glides between scenes. Deliberately a single dark-sea look in both themes. */
 :root{
@@ -411,22 +411,22 @@ var LET={
 var CHS=[
  {t:'מִפְרַץ הָאוֹתִיּוֹת',L:['מ','ב','א'],outro:'מִתּוֹךְ הָעֲרָפֶל שֶׁל הָאִי הַבָּא הִבְהֲבוּ שְׁתֵּי עֵינַיִם צְהֻבּוֹת... מִי מִסְתַּתֵּר שָׁם? בַּפֶּרֶק הַבָּא נְגַלֶּה!'},
  {t:'פַּנַּס הַיָּם',L:['ש','ל','ר'],prop:'lantern',
-  intro:'בַּפֶּרֶק הַקּוֹדֵם מָצָאנוּ אֶת הָאוֹתִיּוֹת מ, ב, א. עַכְשָׁו הָעֲרָפֶל נֶעֱלָם, וְעַל הָאִי הַבָּא רוֹאִים שְׁתֵּי עֵינַיִם צְהֻבּוֹת. אֲבָל אֵלּוּ לֹא עֵינַיִם! אֵלּוּ הַחַלּוֹנוֹת שֶׁל פַּנַּס הַיָּם, וְהוּא כָּבוּי. שָׁלוֹשׁ אוֹתִיּוֹת יַדְלִיקוּ אוֹתוֹ שׁוּב.',
-  outro:'הַפַּנָּס נִדְלַק, וְהָאוֹר הַזָּהוֹב שֶׁלּוֹ הֵאִיר שְׁבִיל שֶׁל צְדָפִים. מִתּוֹךְ מְעָרָה גְדוֹלָה בָּאָה מַנְגִּינָה עֲצוּבָה... מִי שָׁר שָׁם לְבַדּוֹ?'},
+  intro:'בַּפֶּרֶק הַקּוֹדֵם מָצָאנוּ אֶת הָאוֹתִיּוֹת מ, ב, א. עַכְשָׁו הָעֲרָפֶל נֶעֱלָם, וְעַל הָאִי הַבָּא רוֹאִים שְׁתֵּי עֵינַיִם צְהֻבּוֹת. אֲבָל אֵלּוּ לֹא עֵינַיִם! אֵלּוּ הַחַלּוֹנוֹת שֶׁל פַּנַּס הַיָּם, וְהוּא כָּבוּי.',
+  outro:'הַפַּנָּס נִדְלַק! מִתּוֹךְ מְעָרָה גְדוֹלָה בָּאָה מַנְגִּינָה עֲצוּבָה... מִי שָׁר שָׁם לְבַדּוֹ?'},
  {t:'מְעָרַת הַשִּׁיר',L:['ד','ג','ה'],prop:'shell',
-  intro:'בַּפֶּרֶק הַקּוֹדֵם הִדְלַקְנוּ אֶת הַפַּנָּס. עַכְשָׁו נִכְנָסִים לַמְּעָרָה, וְשָׁם יוֹשֵׁב לִוְיָתָן קָטָן וְעָצוּב. הוּא אוֹמֵר: שָׁכַחְתִּי אֶת מִלּוֹת הַשִּׁיר שֶׁלִּי! הַמִּלִּים כְּתוּבוֹת עַל הַקִּירוֹת, אֲבָל חֲסֵרוֹת בָּהֶן אוֹתִיּוֹת. בּוֹאוּ נַחֲזִיר לוֹ אוֹתָן.',
-  outro:'הַלִּוְיָתָן שָׁר שׁוּב בְּקוֹל שָׂמֵחַ! בְּסוֹף הַשִּׁיר הוּא לוֹחֵשׁ: בְּשׁוּק הַצְּדָפִים יֵשׁ מִי שֶׁמַּחֲזִיק חֲתִיכָה שֶׁל מַפָּה.'},
+  intro:'בַּמְּעָרָה יוֹשֵׁב לִוְיָתָן קָטָן וְעָצוּב. הוּא שָׁכַח אֶת מִלּוֹת הַשִּׁיר שֶׁלּוֹ, כִּי חָסְרוּ בָּהֶן אוֹתִיּוֹת. בּוֹאוּ נַחֲזִיר לוֹ אוֹתָן!',
+  outro:'הַלִּוְיָתָן שָׁר שׁוּב! הוּא לוֹחֵשׁ: בְּשׁוּק הַצְּדָפִים מְחַכָּה לָנוּ חֲתִיכָה שֶׁל מַפָּה.'},
  {t:'שׁוּק הַצְּדָפִים',L:['נ','ת','ו'],prop:'map',
-  intro:'בַּפֶּרֶק הַקּוֹדֵם הַלִּוְיָתָן שָׁר שׁוּב. עַכְשָׁו הִגַּעְנוּ לְשׁוּק הַצְּדָפִים. כָּל הַדַּגִּים צוֹעֲקִים, וְאִי אֶפְשָׁר לִקְרֹא אֶת הַשְּׁלָטִים, כִּי הָאוֹתִיּוֹת נֶעֶלְמוּ גַּם מִשָּׁם. הַדָּג הַמּוֹכֵר יִתֵּן לָנוּ חֲתִיכָה שֶׁל מַפָּה, אִם נַחֲזִיר אֶת הַשְּׁלָטִים.',
-  outro:'קִבַּלְנוּ חֲתִיכָה שֶׁל מַפָּה! הִיא מְצַיֶּרֶת גַּן צִבְעוֹנִי, אֲבָל כָּל הַצְּבָעִים בָּהּ דָּהוּ. הַמַּפָּה אוֹמֶרֶת: גַּן הָאַלְמוֹגִים מְחַכֶּה לָכֶם.'},
+  intro:'הִגַּעְנוּ לְשׁוּק הַצְּדָפִים. הָאוֹתִיּוֹת נֶעֶלְמוּ מֵהַשְּׁלָטִים! אִם נַחֲזִיר אוֹתָן, הַדָּג הַמּוֹכֵר יִתֵּן לָנוּ חֲתִיכָה שֶׁל מַפָּה.',
+  outro:'קִבַּלְנוּ חֲתִיכָה שֶׁל מַפָּה! הִיא מַרְאָה גַּן שֶׁכָּל הַצְּבָעִים שֶׁלּוֹ דָּהוּ: גַּן הָאַלְמוֹגִים.'},
  {t:'גַּן הָאַלְמוֹגִים',L:['כ','פ','ח'],prop:'compass',
-  intro:'בַּפֶּרֶק הַקּוֹדֵם קִבַּלְנוּ חֲתִיכָה שֶׁל מַפָּה. הִיא הוֹבִילָה אוֹתָנוּ לְגַן הָאַלְמוֹגִים. פַּעַם הוּא הָיָה מָלֵא צְבָעִים, אֲבָל הַסְּעָרָה לָקְחָה אֶת הָאוֹתִיּוֹת, וְאִתָּן אֶת הַצְּבָעִים. כָּל אוֹת שֶׁנִּמְצָא תַּחְזִיר צֶבַע אֶחָד.',
-  outro:'הַגַּן נִצְבַּע שׁוּב! בַּמֶּרְחָק רוֹאִים סְפִינָה יְשָׁנָה שֶׁשָּׁקְעָה לִפְנֵי הַרְבֵּה שָׁנִים. מִתּוֹכָהּ בָּא אוֹר קָטָן. מִישֶׁהוּ מְחַכֶּה לָנוּ שָׁם.'},
+  intro:'הַמַּפָּה הוֹבִילָה אוֹתָנוּ לְגַן הָאַלְמוֹגִים. הַסְּעָרָה לָקְחָה מִמֶּנּוּ אֶת הַצְּבָעִים. כָּל אוֹת שֶׁנִּמְצָא תַּחְזִיר צֶבַע אֶחָד!',
+  outro:'הַגַּן נִצְבַּע שׁוּב! בַּמֶּרְחָק רוֹאִים סְפִינָה יְשָׁנָה שֶׁשָּׁקְעָה, וּמִתּוֹכָהּ בָּא אוֹר קָטָן.'},
  {t:'הַסְּפִינָה הַשְּׁקוּעָה',L:['ס','ע','ק'],prop:'key',
-  intro:'בַּפֶּרֶק הַקּוֹדֵם צָבַעְנוּ אֶת הַגַּן. עַכְשָׁו אָנוּ בְּתוֹךְ סְפִינָה יְשָׁנָה שֶׁשָּׁקְעָה. יֵשׁ בָּהּ אָרוֹן סְפָרִים, אֲבָל הוּא נָעוּל בִּשְׁלוֹשָׁה מַנְעוּלִים, וּבְכָל מַנְעוּל כְּתוּבָה אוֹת. נִמְצָא אוֹתָן וְנִפְתַּח.',
-  outro:'הָאָרוֹן נִפְתַּח, וּבְתוֹכוֹ סֵפֶר גָּדוֹל וִישָׁן! אֲבָל חֲסֵרוֹת בּוֹ כַּמָּה אוֹתִיּוֹת. הַסֵּפֶר לוֹחֵשׁ: לְכוּ לְסִפְרִיַּת הַיָּם, שָׁם מְחַכּוֹת הָאוֹתִיּוֹת הָאַחֲרוֹנוֹת.'},
+  intro:'בְּתוֹךְ הַסְּפִינָה יֵשׁ אָרוֹן נָעוּל בִּשְׁלוֹשָׁה מַנְעוּלִים. עַל כָּל מַנְעוּל כְּתוּבָה אוֹת. נִמְצָא אוֹתָן וְנִפְתַּח!',
+  outro:'הָאָרוֹן נִפְתַּח, וּבְתוֹכוֹ סֵפֶר יָשָׁן! הוּא לוֹחֵשׁ: הָאוֹתִיּוֹת הָאַחֲרוֹנוֹת מְחַכּוֹת בְּסִפְרִיַּת הַיָּם.'},
  {t:'סִפְרִיַּת הַיָּם',L:['ז','ט','י','צ'],prop:'book',
-  intro:'בַּפֶּרֶק הַקּוֹדֵם פָּתַחְנוּ אֶת הָאָרוֹן. עַכְשָׁו הִגַּעְנוּ לְסִפְרִיַּת הַיָּם, הַמָּקוֹם הֲכִי יָפֶה בַּמִּפְרָץ. אַרְבַּע הָאוֹתִיּוֹת הָאַחֲרוֹנוֹת מְחַכּוֹת בֵּין הַסְּפָרִים. כְּשֶׁנִּמְצָא אוֹתָן, הַמִּפְרָץ יָשׁוּב לִהְיוֹת כְּמוֹ פַּעַם.',
+  intro:'הִגַּעְנוּ לְסִפְרִיַּת הַיָּם. אַרְבַּע הָאוֹתִיּוֹת הָאַחֲרוֹנוֹת מִתְחַבְּאוֹת בֵּין הַסְּפָרִים. כְּשֶׁנִּמְצָא אוֹתָן, הַמִּפְרָץ יַחֲזֹר לִהְיוֹת כְּמוֹ פַּעַם!',
   outro:''}
 ];
 var ALLL='אבגדהוזחטיכלמנסעפצקרשת'.split('');
@@ -549,6 +549,8 @@ function pickVoice(){try{var vs=speechSynthesis.getVoices();voice=vs.filter(func
 try{if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}}catch(e){}
 
 var narTok=0,NAR={};
+/* pre-generated narration: AUD[text]={src,dur,w:[[start,end] per word]} (filled by build.py) */
+var AUD=/*AUD*/{};
 function fishSVG(){return '<svg viewBox="0 0 120 70"><path d="M12 35 L-8 12 L-8 58z" fill="#FF8A3D" stroke="#12395A" stroke-width="4" stroke-linejoin="round"/><ellipse cx="62" cy="35" rx="46" ry="28" fill="#FFB347" stroke="#12395A" stroke-width="4"/><path d="M40 12 Q62 -6 84 14" fill="#FF7A59" stroke="#12395A" stroke-width="4" stroke-linejoin="round"/><ellipse cx="62" cy="48" rx="30" ry="12" fill="#FFE3B0" opacity=".8"/><circle cx="88" cy="28" r="9" fill="#fff" stroke="#12395A" stroke-width="3"/><circle cx="90" cy="28" r="4.5" fill="#12395A"/><path d="M96 46 Q104 50 110 44" fill="none" stroke="#12395A" stroke-width="3.5" stroke-linecap="round"/></svg>'}
 /* Slow storytelling narration: the spoken word lights up and a little fish hops from word to word. */
 function narrate(box,text,opts){
@@ -589,9 +591,26 @@ function narrate(box,text,opts){
         duck(tot*mpu+1500);speechSynthesis.speak(u8);P(endPhrase,tot*mpu*1.6+2500)}catch(e){P(endPhrase,tot*mpu)}
     }else P(endPhrase,tot*mpu+60);
   }
+  /* real recorded voice: the highlight and fish follow the clip's word timings */
+  var clip=S.voice&&AUD[text],aud=null;
+  if(clip&&clip.w&&clip.w.length===ws.length){
+    var played=false;
+    function fallback(){if(played||tok!==narTok)return;aud=null;clip=null;startPhrases()}
+    function tick(){if(tok!==narTok||!aud)return;var t=aud.currentTime,k=-1;
+      for(var j=0;j<clip.w.length;j++)if(clip.w[j][0]<=t+.06)k=j;
+      if(k>cur){var nx=clip.w[k+1]?clip.w[k+1][0]-clip.w[k][0]:.3;mark(k,Math.min(.4,nx*.8))}
+      if(!aud.ended)requestAnimationFrame(tick)}
+    try{speechSynthesis.cancel()}catch(e){}
+    later(function(){if(tok!==narTok)return;pos(0,0);fish.style.opacity='1';
+      aud=new Audio(clip.src);aud.onended=function(){if(tok===narTok)T(finish,250)};aud.onerror=fallback;
+      duck(clip.dur*1000+900);
+      var pr=aud.play();if(pr&&pr.then)pr.then(function(){played=true;requestAnimationFrame(tick);T(function(){if(aud&&!aud.ended)T(finish,0)},clip.dur*1000+4000)},fallback);else{played=true;requestAnimationFrame(tick)}},30);
+    return function stop(){narTok++;tms.forEach(clearTimeout);if(aud){try{aud.pause()}catch(e){}}aud=null}
+  }
+  function startPhrases(){T(function(){phrase(0)},300)}
   try{speechSynthesis.cancel()}catch(e){}
-  later(function(){if(tok!==narTok)return;pos(0,0);fish.style.opacity='1';T(function(){phrase(0)},300)},30);
-  return function stop(){narTok++;tms.forEach(clearTimeout);try{speechSynthesis.cancel()}catch(e){}}
+  later(function(){if(tok!==narTok)return;pos(0,0);fish.style.opacity='1';startPhrases()},30);
+  return function stop(){narTok++;tms.forEach(clearTimeout);try{speechSynthesis.cancel()}catch(e){}if(aud){try{aud.pause()}catch(e){}}}
 }
 function say(t,rate){duck(2200);
   if(!S.voice||!('speechSynthesis' in window))return;
@@ -1035,7 +1054,7 @@ function reward(){
     var p=G.getBoundingClientRect();
     later(function(){burst(G.clientWidth*.5,G.clientHeight*.3,40,'star')},400);
     SC.appendChild(el('','dock')).appendChild(btn('לחנות','gold',function(){shop('end')}));
-    talk('הצלחנו! עכשיו אפשר להתקשט בחנות.',{x:32,dy:17});
+    talk('הצלחנו! עכשיו אפשר להתקשט בחנות.',{x:32,dy:17});BUB.style.left=(G.clientWidth*.8)+'px';BUB.style.top=(G.clientHeight*.86)+'px';
   });
 }
 function shop(from){
@@ -1062,14 +1081,14 @@ function teaser(){
   if(S.ch>=CHS.length-1){finale();return}
   go(function(){
     var first=S.ch===0;
-    mood(first?'m-fog':'m-deep');music('fog',.45);later(function(){music('fog',.95)},2600);HUD.hidden=false;hud();place(24,72,14);
+    mood(first?'m-fog':'m-deep');music('fog',.45);later(function(){music('fog',.95)},2600);HUD.hidden=false;hud();place(15,44,14);
     SC.appendChild(el('<svg viewBox="0 0 1000 625" class="fill" style="width:100%;height:100%" preserveAspectRatio="none"><rect width="1000" height="625" fill="#0b1c2c" opacity=".5"/></svg>','fill'));
     SC.appendChild(el('<div style="width:30cqw;margin:auto">'+islandSVG('lock')+'</div>','fade','position:absolute;left:62%;top:55%;transform:translate(-50%,-50%);width:36cqw'));
     if(first){
       SC.appendChild(el('<svg viewBox="0 0 120 40" class="eyes"><ellipse cx="38" cy="20" rx="14" ry="8" fill="#FFC83D"/><ellipse cx="82" cy="20" rx="14" ry="8" fill="#FFC83D"/><circle cx="38" cy="20" r="4" fill="#12395A"/><circle cx="82" cy="20" r="4" fill="#12395A"/></svg>','','position:absolute;left:62%;top:55%;width:18cqw;transform:translate(-50%,-50%)'));
       G.classList.add('shake');snd('rumble');later(function(){G.classList.remove('shake')},900)}
     var out=CHS[S.ch].outro;
-    later(function(){var sb=el('','story ep fade');SC.appendChild(sb);narrate(sb,out)},800);
+    later(function(){var sb=el('','story ep fade','bottom:10.5cqw');SC.appendChild(sb);narrate(sb,out)},800);
     later(function(){SC.appendChild(el('בפרק הבא · '+CHS[S.ch+1].t,'ttl pop-in','position:absolute;left:0;right:0;top:12cqw;font-size:5cqw'));snd('chime')},first?3400:900);
     var d=el('','dock');d.appendChild(btn('לפרק הבא','gold sm',function(){nextChapter()}));SC.appendChild(d);
   });
@@ -1095,7 +1114,7 @@ function finale(){
     SC.appendChild(el(l,'row','position:absolute;left:50%;top:21%;transform:translateX(-50%);width:62cqw;flex-wrap:wrap;justify-content:center;gap:1.1cqw;direction:rtl'));
     for(var k=0;k<5;k++)(function(k){later(function(){burst(G.clientWidth*rnd(.25,.8),G.clientHeight*rnd(.15,.4),26,'star');snd('coin')},500+k*700)})(k);
     var sb=el('','story ep fade');SC.appendChild(sb);
-    later(function(){narrate(sb,'מָצָאנוּ אֶת כָּל הָאוֹתִיּוֹת! הַמִּפְרָץ שׁוּב מָלֵא שְׁלָטִים, מַפּוֹת וְסוֹדוֹת, וְאַתְּ קָרָאת אוֹתָם בְּעַצְמֵךְ. תּוֹדָה, מְגַלָּה הָאוֹתִיּוֹת! הַהַרְפַּתְקָה נִמְשֶׁכֶת: מְחַכּוֹת עוֹד חָמֵשׁ אוֹתִיּוֹת סוֹפִיּוֹת וְסוֹד אֶחָד גָּדוֹל.')},1200);
+    later(function(){narrate(sb,'מָצָאנוּ אֶת כָּל הָאוֹתִיּוֹת! וְאַתְּ קָרָאת הַכֹּל בְּעַצְמֵךְ. תּוֹדָה, מְגַלָּה הָאוֹתִיּוֹת! בַּפַּעַם הַבָּאָה: חָמֵשׁ אוֹתִיּוֹת סוֹפִיּוֹת וְסוֹד אֶחָד גָּדוֹל.')},1200);
     var d=el('','dock');d.appendChild(btn('לחנות','sm',function(){shop('map')}));d.appendChild(btn('לשחק שוב','gold sm',function(){S=fresh();syncTg();title()}));SC.appendChild(d);
   });
 }
