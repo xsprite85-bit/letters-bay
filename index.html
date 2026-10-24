@@ -2903,7 +2903,7 @@ var sfx={
 };
 function snd(n){if(AC&&S.sfx)try{sfx[n]()}catch(e){}}
 var voice=null;
-function pickVoice(){try{var vs=speechSynthesis.getVoices();voice=vs.filter(function(v){return /^he|iw/i.test(v.lang)})[0]||null}catch(e){}}
+function pickVoice(){try{var vs=speechSynthesis.getVoices();var he=vs.filter(function(v){return /^(he|iw)/i.test(v.lang)});voice=he.filter(function(v){return /hila|carmit|female|google/i.test(v.name)})[0]||he[0]||null}catch(e){}}
 try{if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}}catch(e){}
 
 var narTok=0,NAR={};
@@ -2929,8 +2929,8 @@ function narrate(box,text,opts){
     try{fish.firstChild.animate([{transform:'translateY(0) rotate(8deg)'},{transform:'translateY(-3.6cqw) rotate(26deg)',offset:.5},{transform:'translateY(0) rotate(-10deg)'}],{duration:d*1000,easing:'ease-in-out'})}catch(e){}
     if(i%2===0)snd('tap')}
   function finish(){if(cur>=0){ws[cur].classList.remove('on')}ws.forEach(function(w){w.classList.remove('on');w.classList.add('done')});fish.style.transition='opacity .6s';fish.style.opacity='0';if(opts.done)opts.done()}
-  /* phrases (max 4 words, split on punctuation) are read continuously and slowly; inside a phrase the fish follows the voice's word events, or a timing estimate that is re-calibrated after every phrase */
-  var chunks=[],c=[];words.forEach(function(w,i){c.push(i);if(/[,.!?…]$/.test(w)||c.length>=4){chunks.push(c);c=[]}});if(c.length)chunks.push(c);
+  /* whole sentences (split only at . ! ? …) are read continuously and slowly; inside a phrase the fish follows the voice's word events, or a timing estimate that is re-calibrated after every phrase */
+  var chunks=[],c=[];words.forEach(function(w,i){c.push(i);if(/[.!?…]['"״]?$/.test(w)){chunks.push(c);c=[]}});if(c.length)chunks.push(c);
   function phrase(n){
     if(n>=chunks.length){T(finish,200);return}
     var idx=chunks[n],txt=idx.map(function(i){return words[i]}).join(' '),last=words[idx[idx.length-1]],pause=/[.!?]$/.test(last)?380:/[,…]$/.test(last)?200:40;
@@ -2942,8 +2942,8 @@ function narrate(box,text,opts){
     function P(fn,ms){var id=setTimeout(function(){if(tok===narTok&&!ended)fn()},ms);pt.push(id);tms.push(id)}
     idx.forEach(function(wi,k){P(function(){if(!synced||k===0)mark(wi,(offs[k+1]!==undefined?offs[k+1]-offs[k]:2)*mpu/1000*.8)},Math.max(0,offs[k]*mpu-90))});
     if(voiceOn){
-      try{var u8=new SpeechSynthesisUtterance(txt.replace(/[.,!?…]+/g,' '));u8.lang='he-IL';if(voice)u8.voice=voice;u8.rate=rate;u8.pitch=1.12;
-        var clean=idx.map(function(i){return words[i].replace(/[.,!?…]+/g,'')}),cs=[],cc=0;clean.forEach(function(w){cs.push(cc);cc+=w.length+1});
+      try{var u8=new SpeechSynthesisUtterance(idx.map(function(i){return words[i].replace(/[.!?…]+/g,'')}).join(' '));u8.lang='he-IL';if(voice)u8.voice=voice;u8.rate=rate;u8.pitch=1.12;
+        var clean=idx.map(function(i){return words[i].replace(/[.!?…]+/g,'')}),cs=[],cc=0;clean.forEach(function(w){cs.push(cc);cc+=w.length+1});
         u8.onboundary=function(e){if(tok!==narTok||ended)return;if(e.name&&e.name!=='word')return;var k=0;for(var j=0;j<cs.length;j++)if(cs[j]<=e.charIndex)k=j;if(k>0)synced=true;mark(idx[k],.28)};
         u8.onend=function(){if(tok===narTok)endPhrase()};u8.onerror=u8.onend;
         duck(tot*mpu+1500);speechSynthesis.speak(u8);P(endPhrase,tot*mpu*1.6+2500)}catch(e){P(endPhrase,tot*mpu)}
@@ -3093,7 +3093,8 @@ try{PN=(localStorage.getItem('lb_name')||'').replace(/[<>&"'`]/g,'').slice(0,14)
 /* The companion glides to the middle, talks, and is itself the big "next" button; it nudges again every few seconds. */
 function nextPrompt(parent,onTap,o){
   o=o||{};var x=o.x==null?50:o.x,y=o.y==null?50:o.y,w=o.w||22,gen=S.gen,fin=false,k=0;
-  var L=o.lines||['כל הכבוד'+(PN?' '+PN:'')+GN('! לחצי עליי ונמשיך!','! לחץ עליי ונמשיך!'),GN('אני כאן! לחצי עליי כדי להמשיך','אני כאן! לחץ עליי כדי להמשיך'),GN('מוכנה להמשיך','מוכן להמשיך')+(PN?', '+PN:'')+GN('? לחצי עליי!','? לחץ עליי!')];
+  var TAP=GN('לחצי עליי ונמשיך!','לחץ עליי ונמשיך!'),TEASE=['הסיפור הולך ומסתבך... ','מה מחכה לנו שם? ','יש אור בקצה המנהרה... ','משהו מנצנץ במרחק... '];
+  var L=o.lines||[(o.tease||TEASE[Math.floor(Math.random()*TEASE.length)])+TAP,TAP,GN('אני כאן! לחצי עליי כדי להמשיך','אני כאן! לחץ עליי כדי להמשיך')];
   var hidden=COMP.style.opacity!=='1';
   drawComp();
   if(hidden){COMP.style.transition='none';place(112,y,w);void COMP.offsetWidth;COMP.style.transition=''}
@@ -3154,7 +3155,6 @@ function episode(tag,text,next,o){
     var tg=el(tag,'eptag fade');SC.appendChild(tg);
     var sb=el('','story ep fade');SC.appendChild(sb);var st=narrate(sb,text,{done:function(){tg.style.transition='opacity .5s';tg.style.opacity='0';nextPrompt(SC,function(){next()},{y:40,w:19})}});
     if(o.draw)o.draw();
-    SC.appendChild(btn('הלאה','gold sm',function(){st();next()},'position:absolute;top:3.4cqw;left:3cqw'));
   });
 }
 function episode1(){
@@ -3166,9 +3166,9 @@ function story(){
   go(function(){
     mood('m-night');HUD.hidden=true;hideComp();
     var P=[
-      {t:'בַּלַּיְלָה אֶחָד הִתְחוֹלְלָה סְעָרָה גְּדוֹלָה בַּמִּפְרָץ...',fx:'storm'},
-      {t:'הַסְּעָרָה פִּזְּרָה אֶת כָּל הָאוֹתִיּוֹת שֶׁל הַמִּפְרָץ לְכָל עֵבֶר!',fx:'scatter'},
-      {t:'בְּלִי אוֹתִיּוֹת אִי אֶפְשָׁר לִקְרֹא שְׁלָטִים, מַפּוֹת אוֹ סוֹדוֹת שֶׁל הַיָּם.',fx:'quiet'},
+      {t:'בַּלַּיְלָה אֶחָד הִתְחוֹלְלָה סְעָרָה גְּדוֹלָה בַּמִּפְרָץ...',fx:'storm',tz:'הסערה מתחזקת... '},
+      {t:'הַסְּעָרָה פִּזְּרָה אֶת כָּל הָאוֹתִיּוֹת שֶׁל הַמִּפְרָץ לְכָל עֵבֶר!',fx:'scatter',tz:'לאן עפו כל האותיות? '},
+      {t:'בְּלִי אוֹתִיּוֹת אִי אֶפְשָׁר לִקְרֹא שְׁלָטִים, מַפּוֹת אוֹ סוֹדוֹת שֶׁל הַיָּם.',fx:'quiet',tz:'אז מה עושים עכשיו? '},
       {t:GN('רַק מִי שֶׁלּוֹמֶדֶת לִקְרֹא יְכוֹלָה לִמְצֹא אוֹתָן. מִי תַּעֲזֹר לָנוּ','רַק מִי שֶׁלּוֹמֵד לִקְרֹא יָכוֹל לִמְצֹא אוֹתָן. מִי יַעֲזֹר לָנוּ')+(PN?', '+PN:'')+'?',fx:'ask'}
     ],i=0,stopN=null;
     var wrap=el('','fill');SC.appendChild(wrap);
@@ -3178,9 +3178,8 @@ function story(){
       if(p.fx==='scatter'){var h='';'אבגדהוזחטיכלמנסעפצקרשת'.split('').forEach(function(c){h+='<span class="drift" style="left:'+rnd(30,70)+'%;top:'+rnd(35,60)+'%;font-size:'+rnd(5,10)+'cqw;--dx:'+rnd(-70,70)+'cqw;--dy:'+rnd(-45,40)+'cqw;--r:'+rnd(-360,360)+'deg;animation-duration:'+rnd(2.2,4.5)+'s">'+c+'</span>'});wrap.appendChild(el(h,'fill'));snd('whoosh')}
       if(p.fx==='quiet'){wrap.appendChild(el('<div style="position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);font-size:18cqw;color:#fff;opacity:.7;font-family:var(--f-read);font-weight:700" class="bobi">?</div>',''))}
       if(p.fx==='ask'){drawComp();place(50,48,22);COMP.style.opacity='1'}
-      var sb=el('','story fade');wrap.appendChild(sb);if(stopN)stopN();music(p.fx==='storm'?'storm':p.fx==='scatter'?'storm':p.fx==='quiet'?'mystery':'mystery',{storm:.5,scatter:1,quiet:.2,ask:.55}[p.fx]);stopN=narrate(sb,p.t,{done:function(){nextPrompt(wrap,function(){if(last){pick()}else{i++;show()}},last?{x:50,y:48,w:22,lines:[GN('מוכנה','מוכן')+(PN?', '+PN:'')+GN('? לחצי עליי ונתחיל בהרפתקה!','? לחץ עליי ונתחיל בהרפתקה!'),GN('אני מחכה לך! לחצי עליי!','אני מחכה לך! לחץ עליי!')]}:{x:50,y:46,w:20})}});
+      var sb=el('','story fade');wrap.appendChild(sb);if(stopN)stopN();music(p.fx==='storm'?'storm':p.fx==='scatter'?'storm':p.fx==='quiet'?'mystery':'mystery',{storm:.5,scatter:1,quiet:.2,ask:.55}[p.fx]);stopN=narrate(sb,p.t,{done:function(){nextPrompt(wrap,function(){if(last){pick()}else{i++;show()}},last?{x:50,y:48,w:22,lines:[GN('מוכנה','מוכן')+(PN?', '+PN:'')+GN('? לחצי עליי ונתחיל בהרפתקה!','? לחץ עליי ונתחיל בהרפתקה!'),GN('אני מחכה לך! לחצי עליי!','אני מחכה לך! לחץ עליי!')]}:{x:50,y:46,w:20,tease:p.tz})}});
       var last=i===P.length-1;
-      wrap.appendChild(btn(last?'אני אעזור!':'הלאה','gold sm',function(){if(last){pick()}else{i++;show()}},'position:absolute;top:3.4cqw;left:3cqw'));
     }
     show();
   });
@@ -3271,16 +3270,16 @@ function stepListen(L,idx){
 function stepCatch(L,idx){
   go(function(){
     frame(1,idx);place(14,78,15);
-    var need=3,got=0,gen=S.gen;
+    var need=3,got=0,gen=S.gen,since=0;
     var cnt=el('','row','position:absolute;top:13.5cqw;left:50%;transform:translateX(-50%);z-index:5');
     function cr(){var h='';for(var i=0;i<need;i++)h+='<div class="slot'+(i<got?' on':'')+'" style="width:5cqw;height:5cqw">'+(i<got?L.ch:'')+'</div>';cnt.innerHTML=h}cr();SC.appendChild(cnt);
     later(function(){talk(GN('פוצצי רק את הבועות עם האות ','פוצץ רק את הבועות עם האות ')+L.name+'. '+L.ch+'!',{x:32,dy:17})},400);
     var area=el('','fill');SC.appendChild(area);
     function spawn(){
       if(gen!==S.gen)return;
-      var isT=Math.random()<.42,ch=isT?L.ch:pickDist(L.ch);
-      var size=rnd(10,13),b=document.createElement('button');b.type='button';b.className='catchb';b.textContent=ch;
-      b.style.cssText='left:'+rnd(6,86)+'%;top:104%;width:'+size+'cqw;height:'+size+'cqw;font-size:'+size*.62+'cqw;animation-duration:'+rnd(7,10)+'s';
+      var isT=since>=6||(since>=2&&Math.random()<.2),ch=isT?L.ch:pickDist(L.ch);since=isT?0:since+1;
+      var size=rnd(6.5,8.5),b=document.createElement('button');b.type='button';b.className='catchb';b.textContent=ch;
+      b.style.cssText='left:'+rnd(3,90)+'%;top:104%;width:'+size+'cqw;height:'+size+'cqw;font-size:'+size*.62+'cqw;animation-duration:'+rnd(7,10)+'s';
       b.addEventListener('animationend',function(e){if(e.animationName==='rise2')b.remove()});
       b.addEventListener('pointerdown',function(e){
         if(b.dataset.x)return;
@@ -3288,7 +3287,7 @@ function stepCatch(L,idx){
           if(got>=need){snd('chime');later(function(){talk('כל הכבוד! תפסת את כולן!',{x:32,dy:17});later(function(){stepTrace(L,idx)},700)},400);gen=-1;area.innerHTML=''}}
         else{snd('soft');b.classList.remove('wob');void b.offsetWidth;b.classList.add('wob');say('זו לא '+L.ch+'. נמשיך לחפש',.8)}
       });
-      area.appendChild(b);later(spawn,rnd(550,900));
+      area.appendChild(b);later(spawn,rnd(800,1250));
     }
     spawn();later(spawn,300);later(spawn,700);
   });
