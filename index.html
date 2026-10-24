@@ -3186,7 +3186,7 @@ function title(){
     lt+='<span class="drift" style="left:'+rnd(4,90)+'%;top:'+rnd(48,78)+'%;font-size:'+rnd(5,9)+'cqw;--dx:'+rnd(-3,3)+'cqw;--dy:'+rnd(-3,-1)+'cqw;--r:'+rnd(-20,20)+'deg;animation-duration:'+rnd(2.5,5)+'s;animation-iteration-count:infinite;animation-direction:alternate">'+c+'</span>'});
   d.appendChild(el(lt,'fill'));
   var prog=S.ch>0||S.letters.length>0;
-  d.appendChild(btn(prog?'ממשיכים בהרפתקה · פרק '+(S.ch+1):'יוצאים להרפתקה','',function(){initAudio();if(!document.fullscreenElement&&!GL.rot)goFull();snd('whoosh');if(!(PN&&PG))askName();else if(prog)map();else story()},'position:absolute;bottom:9cqw;left:50%;transform:translateX(-50%);font-size:4cqw;padding:1.4cqw 6cqw'));
+  d.appendChild(btn(prog?'ממשיכים בהרפתקה · פרק '+(S.ch+1):'יוצאים להרפתקה','',function(){initAudio();if(!document.fullscreenElement&&!(window.matchMedia&&matchMedia('(display-mode: fullscreen)').matches))goFull();snd('whoosh');if(!(PN&&PG))askName();else if(prog)map();else story()},'position:absolute;bottom:9cqw;left:50%;transform:translateX(-50%);font-size:4cqw;padding:1.4cqw 6cqw'));
   d.appendChild(btn('הורים','sm',function(){parentGate()},'position:absolute;top:3cqw;right:3cqw;font-size:1.8cqw;padding:.5cqw 1.8cqw;opacity:.9'));
   d.appendChild(btn('בחירת פרק','sm',function(){chapterPicker()},'position:absolute;bottom:3cqw;left:3cqw;font-size:1.9cqw;padding:.5cqw 1.6cqw;opacity:.85'));
   d.appendChild(el('הצלילים יתחילו אחרי הלחיצה','', 'position:absolute;bottom:3.5cqw;left:0;right:0;text-align:center;color:#fff;font-size:1.9cqw;opacity:.85;pointer-events:none'));
@@ -3751,7 +3751,7 @@ function syncTg(){if(S.music===undefined)S.music=true;$('#tgMusic').setAttribute
 $('#tgMusic').addEventListener('click',function(){S.music=!S.music;if(ambG)ambG.gain.value=S.music?.12:0;syncTg()});
 $('#tgVoice').addEventListener('click',function(){S.voice=!S.voice;if(!S.voice){try{speechSynthesis.cancel()}catch(e){}if(NAR.aud){try{NAR.aud.pause()}catch(e){}}}syncTg()});
 
-function goFull(){try{var e=G.requestFullscreen?G.requestFullscreen():G.webkitRequestFullscreen&&G.webkitRequestFullscreen();var lk=function(){try{screen.orientation.lock('landscape').catch(function(){})}catch(x){}};if(e&&e.then)e.then(lk).catch(function(){});else lk()}catch(x){}}
+function goFull(){try{var R=document.documentElement,e=R.requestFullscreen?R.requestFullscreen({navigationUI:'hide'}):R.webkitRequestFullscreen&&R.webkitRequestFullscreen();var lk=function(){try{screen.orientation.lock('landscape').catch(function(){})}catch(x){}};if(e&&e.then)e.then(lk).catch(function(){});else lk()}catch(x){}}
 $('#fsBtn').addEventListener('click',function(){if(document.fullscreenElement){document.exitFullscreen()}else goFull()});
 $('#restart').addEventListener('click',function(){S=fresh();syncTg();title()});
 
