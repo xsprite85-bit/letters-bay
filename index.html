@@ -2975,6 +2975,7 @@ function narrate(box,text,opts){
   return function stop(){narTok++;tms.forEach(clearTimeout);try{speechSynthesis.cancel()}catch(e){}if(aud){try{aud.pause()}catch(e){}}}
 }
 function say(t,rate){duck(2200);
+  if(S.voice&&AUD[t]){try{speechSynthesis.cancel()}catch(e){}try{if(NAR.say)NAR.say.pause();NAR.say=new Audio(AUD[t].src);NAR.say.play().catch(function(){})}catch(e){}return}
   if(!S.voice||!('speechSynthesis' in window))return;
   try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang='he-IL';if(voice)u.voice=voice;u.rate=rate||.8;u.pitch=1.1;speechSynthesis.speak(u)}catch(e){}
 }
