@@ -32,6 +32,20 @@ async def main(ci):
             await pg.wait_for_timeout(1500)
         for ch in CH[ci]:
             await pg.get_by_label(f'האי של פרק {ci+1}').click(force=True); await pg.wait_for_timeout(1500)
+            await pg.locator('.sea').wait_for(timeout=15000); await pg.wait_for_timeout(800)
+            if ch==CH[ci][0]: await pg.screenshot(path=f'sea{ci}_0.png')
+            cov=pg.locator('.sea .cover'); nn=await cov.count(); shot=False
+            for j in range(nn):
+                if await pg.locator('.hidL.got').count(): break
+                c=cov.nth(j); cls=await c.get_attribute('class')
+                if 'rock' in cls:
+                    bb=await c.bounding_box(); x=bb['x']+bb['width']/2; y=bb['y']+bb['height']/2
+                    await pg.mouse.move(x,y); await pg.mouse.down(); await pg.mouse.move(x+bb['width']*1.2,y,steps=6); await pg.mouse.up()
+                else: await c.click(force=True)
+                await pg.wait_for_timeout(450)
+                if ch==CH[ci][0] and j==2 and not shot: await pg.screenshot(path=f'sea{ci}_1.png'); shot=True
+            assert await pg.locator('.hidL.got').count()==1, 'letter not found'
+            await pg.wait_for_timeout(2200)
             await pg.locator('.orb').click(force=True); await pg.wait_for_timeout(1200)
             await cb('הלאה'); await pg.wait_for_timeout(500)
             got=0

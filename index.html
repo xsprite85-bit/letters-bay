@@ -141,6 +141,24 @@ body{background:var(--bg);color:var(--fg);font-family:var(--f-body);margin:0;
 .wr.ok{border:.5cqw solid var(--gold);box-shadow:0 0 3cqw rgba(255,212,61,.7)}
 .wr canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 .wr canvas.wrflash{pointer-events:none}
+.sea .swim{position:absolute;left:108%;animation-name:swimL;animation-timing-function:linear;animation-iteration-count:infinite;pointer-events:none}
+.sea .swim.rtl{animation-name:swimR}.sea .swim.rtl svg{transform:scaleX(-1)}
+@keyframes swimL{from{left:108%}to{left:-12%}}@keyframes swimR{from{left:-12%}to{left:108%}}
+.sea .hide{position:absolute;width:12cqw;height:8cqw;transform:translate(-50%,-50%);z-index:3}
+.sea .hidL,.sea .hidB{opacity:0;transition:opacity .35s .15s}.sea .hide.shown .hidL,.sea .hide.shown .hidB{opacity:1}
+.sea .hidL{position:absolute;inset:0;display:grid;place-items:center;font:700 6.4cqw var(--f-read);color:#fff;text-shadow:0 .35cqw 0 var(--ink),0 0 1cqw rgba(0,0,0,.4)}
+.sea .hidL.got{color:var(--gold);animation:gotL 1.5s ease-out forwards;z-index:9}
+@keyframes gotL{0%{transform:scale(1)}40%{transform:scale(1.9) translateY(-4cqw)}100%{transform:scale(1.6) translateY(-6cqw)}}
+.sea .hidB{position:absolute;left:35%;top:25%;width:3cqw;opacity:.8}
+.sea .cover{position:absolute;inset:-12% -8% -4%;background:none;border:0;padding:0;cursor:pointer;touch-action:none;transition:transform .55s cubic-bezier(.3,1.4,.5,1),opacity .5s;z-index:4}
+.sea .cover svg{width:100%;height:100%;display:block;overflow:visible}
+.sea .cover.weed{inset:-85% -6% -6%}.sea .cover.weed .blade{animation:sway 3s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
+.sea .cover.weed.open{transform:scaleX(1.7) translateY(12%);opacity:.3}
+.sea .cover.shell .lid{transition:transform .5s;transform-origin:10px 52px}.sea .cover.shell.open .lid{transform:rotate(-38deg) translate(-6px,-14px)}
+.sea .cover.rock.away{transition:transform .6s ease-out}
+.sea .cover.wig{animation:wig .5s}@keyframes wig{25%{rotate:-6deg}75%{rotate:6deg}}
+.sea .cover.glowc{filter:drop-shadow(0 0 1.4cqw #FFD43D)}
 .tr canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 .bar{position:absolute;bottom:-3.4cqw;left:10%;right:10%;height:1.8cqw;border-radius:2cqw;background:rgba(0,0,0,.3);border:.25cqw solid var(--ink);overflow:hidden}
 .bar b{display:block;height:100%;width:0;background:var(--gold);transition:width .15s}
@@ -2743,7 +2761,8 @@ var $=function(s,r){return (r||document).querySelector(s)};
 var G=$('#game'),SC=$('#scene'),COMP=$('#comp'),CIN=$('#comp .in'),BUB=$('#bubble'),HUD=$('#hud');
 var S,timers=[];
 function fresh(){return {ch:0,comp:'t',hat:null,owned:[],stars:0,coins:0,letters:[],chestDone:false,voice:true,sfx:true,music:true,gen:0}}
-S=fresh();
+S=fresh();try{var SV=JSON.parse(localStorage.getItem('lb_state')||'null');if(SV&&typeof SV==='object'&&SV.ch!=null)S=Object.assign(fresh(),SV)}catch(e){}
+function save(){try{localStorage.setItem('lb_state',JSON.stringify(S))}catch(e){}}
 
 /* ---------- data ---------- */
 var LET={
@@ -3078,13 +3097,13 @@ function talk(t,o){
 }
 function quiet(){BUB.classList.remove('on');try{speechSynthesis.cancel()}catch(e){}}
 function cheer(){if(window.FX)FX.happy();COMP.classList.remove('cheer');void COMP.offsetWidth;COMP.classList.add('cheer')}
-function hud(){
+function hud(){save();
   $('#pStars').innerHTML=starSVG()+'<span>'+S.stars+'</span>';
   $('#pCoins').innerHTML=coinSVG()+'<span>'+S.coins+'</span>';
 }
 function bump(id){var e=$(id);e.classList.remove('bump');void e.offsetWidth;e.classList.add('bump')}
 function mood(m){G.className=m;if(window.FX)FX.setMood(m);var d={'m-day':['calm',.5],'m-deep':['quest',.7],'m-night':['mystery',.35],'m-fog':['fog',.5]}[m]||['calm',.5];music(d[0],d[1])}
-function go(fn){clearTimers();quiet();S.gen++;
+function go(fn){clearTimers();quiet();S.gen++;save();
   if(SC.firstChild&&!matchMedia('(prefers-reduced-motion:reduce)').matches){var gh=document.createElement('div');gh.className='ghost';while(SC.firstChild)gh.appendChild(SC.firstChild);SC.appendChild(gh);setTimeout(function(){gh.remove()},260)}
   else SC.innerHTML='';
   fn()}
@@ -3125,7 +3144,7 @@ function askName(){
       if(!PG){snd('soft');try{gw.animate([{transform:'translateX(0)'},{transform:'translateX(-1cqw)'},{transform:'translateX(1cqw)'},{transform:'translateX(0)'}],{duration:300})}catch(e){}return}
       if(!v){snd('soft');inp.focus();try{inp.animate([{transform:'translateX(0)'},{transform:'translateX(-1cqw)'},{transform:'translateX(1cqw)'},{transform:'translateX(0)'}],{duration:300})}catch(e){}return}
       PN=v;try{localStorage.setItem('lb_name',PN)}catch(e){}
-      snd('chime');say('נעים מאוד, '+PN+'!');ob.disabled=true;later(story,1400)}
+      snd('chime');say('נעים מאוד, '+PN+'!');ob.disabled=true;later((S.ch>0||S.letters.length)?map:story,1400)}
     var ob=btn('יאללה!','gold',ok,'font-size:4.2cqw;padding:1.2cqw 7cqw');
     inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();ok()}});
     var gw=el('','','display:flex;gap:3cqw;justify-content:center'),gb={};
@@ -3145,7 +3164,8 @@ function title(){
   var lt='';'אבגדהוזחטיכלמנסעפצקרשת'.split('').forEach(function(c,i){
     lt+='<span class="drift" style="left:'+rnd(4,90)+'%;top:'+rnd(48,78)+'%;font-size:'+rnd(5,9)+'cqw;--dx:'+rnd(-3,3)+'cqw;--dy:'+rnd(-3,-1)+'cqw;--r:'+rnd(-20,20)+'deg;animation-duration:'+rnd(2.5,5)+'s;animation-iteration-count:infinite;animation-direction:alternate">'+c+'</span>'});
   d.appendChild(el(lt,'fill'));
-  d.appendChild(btn('יוצאים להרפתקה','',function(){initAudio();if(!document.fullscreenElement&&!GL.rot)goFull();snd('whoosh');if(PN&&PG)story();else askName()},'position:absolute;bottom:9cqw;left:50%;transform:translateX(-50%);font-size:4cqw;padding:1.4cqw 6cqw'));
+  var prog=S.ch>0||S.letters.length>0;
+  d.appendChild(btn(prog?'ממשיכים בהרפתקה · פרק '+(S.ch+1):'יוצאים להרפתקה','',function(){initAudio();if(!document.fullscreenElement&&!GL.rot)goFull();snd('whoosh');if(!(PN&&PG))askName();else if(prog)map();else story()},'position:absolute;bottom:9cqw;left:50%;transform:translateX(-50%);font-size:4cqw;padding:1.4cqw 6cqw'));
   d.appendChild(btn('בחירת פרק','sm',function(){chapterPicker()},'position:absolute;bottom:3cqw;left:3cqw;font-size:1.9cqw;padding:.5cqw 1.6cqw;opacity:.85'));
   d.appendChild(el('הצלילים יתחילו אחרי הלחיצה','', 'position:absolute;bottom:3.5cqw;left:0;right:0;text-align:center;color:#fff;font-size:1.9cqw;opacity:.85;pointer-events:none'));
   SC.appendChild(d);
@@ -3249,8 +3269,61 @@ function dotsHTML(n,t){var h='';for(var i=0;i<t;i++)h+='<i class="'+(i<=n?'on':'
 function pickDist(ch){var pool=S.letters.filter(function(c){return c!==ch}),src=pool.length&&Math.random()<.6?pool:ALLL.filter(function(c){return c!==ch});return src[Math.floor(Math.random()*src.length)]}
 function lesson(idx){
   var L=LET[ORD()[idx]];
-  stepListen(L,idx);
+  stepSearch(L,idx);
 }
+/* ---------- sea search: the letter hides under a rock, in seaweed or inside a shell ---------- */
+function seaRockSVG(c){return '<svg viewBox="0 0 120 80"><path d="M8 72 Q4 40 30 26 Q52 6 82 18 Q114 30 112 62 Q110 76 90 76 H22 Q8 76 8 72z" fill="'+c+'" stroke="#12395A" stroke-width="5" stroke-linejoin="round"/><path d="M30 34 Q44 22 60 24" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".35"/><circle cx="84" cy="52" r="5" fill="#12395A" opacity=".18"/><circle cx="40" cy="58" r="3.5" fill="#12395A" opacity=".18"/></svg>'}
+function seaWeedSVG(c){var s='<svg viewBox="0 0 120 150">';[[20,-8],[42,4],[60,-4],[80,8],[98,-6]].forEach(function(b,i){s+='<path class="blade" style="transform-origin:'+b[0]+'px 150px;animation-delay:'+(-i*.4)+'s" d="M'+b[0]+' 150 Q'+(b[0]+b[1]-14)+' 100 '+(b[0]+b[1]+6)+' 60 Q'+(b[0]+b[1]-8)+' 30 '+(b[0]+b[1]+4)+' 6" fill="none" stroke="#12395A" stroke-width="15" stroke-linecap="round"/><path class="blade" style="transform-origin:'+b[0]+'px 150px;animation-delay:'+(-i*.4)+'s" d="M'+b[0]+' 150 Q'+(b[0]+b[1]-14)+' 100 '+(b[0]+b[1]+6)+' 60 Q'+(b[0]+b[1]-8)+' 30 '+(b[0]+b[1]+4)+' 6" fill="none" stroke="'+c+'" stroke-width="9" stroke-linecap="round"/>'});return s+'</svg>'}
+function seaShellSVG(){return '<svg viewBox="0 0 120 90"><path class="lid" d="M10 52 Q14 8 60 6 Q106 8 110 52z" fill="#FFB3C1" stroke="#12395A" stroke-width="5" stroke-linejoin="round"/><path class="lid" d="M60 8 V50 M36 14 L44 50 M84 14 L76 50 M20 30 L30 50 M100 30 L90 50" stroke="#12395A" stroke-width="3" opacity=".45"/><path d="M10 52 Q60 92 110 52z" fill="#FF8FA6" stroke="#12395A" stroke-width="5" stroke-linejoin="round"/></svg>'}
+function seaFishSVG(c){return '<svg viewBox="0 0 100 60"><path d="M74 30 L96 12 V48z" fill="'+c+'" stroke="#12395A" stroke-width="4" stroke-linejoin="round"/><ellipse cx="42" cy="30" rx="34" ry="21" fill="'+c+'" stroke="#12395A" stroke-width="4"/><circle cx="24" cy="25" r="4.5" fill="#12395A"/><path d="M44 14 Q50 30 44 46" fill="none" stroke="#fff" stroke-width="4" opacity=".5"/></svg>'}
+function seaCoralSVG(c){return '<svg viewBox="0 0 100 110"><path d="M50 108 V60 M50 74 Q30 64 26 40 M26 40 V20 M26 52 Q12 46 10 30 M50 64 Q70 52 72 30 M72 30 V12 M72 44 Q86 40 90 24 M50 60 V34" fill="none" stroke="#12395A" stroke-width="14" stroke-linecap="round"/><path d="M50 108 V60 M50 74 Q30 64 26 40 M26 40 V20 M26 52 Q12 46 10 30 M50 64 Q70 52 72 30 M72 30 V12 M72 44 Q86 40 90 24 M50 60 V34" fill="none" stroke="'+c+'" stroke-width="8" stroke-linecap="round"/></svg>'}
+function stepSearch(L,idx){
+  go(function(){
+    mood('m-deep');music('mystery',.55+idx*.1);HUD.hidden=false;hud();place(9,46,11);
+    var area=el('','fill sea');SC.appendChild(area);
+    area.appendChild(el('<svg viewBox="0 0 1000 625" preserveAspectRatio="none" style="width:100%;height:100%"><defs><linearGradient id="sd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2D59A"/><stop offset="1" stop-color="#D9B26A"/></linearGradient></defs><path d="M0 420 Q160 380 330 410 T660 400 T1000 405 V625 H0z" fill="url(#sd)" stroke="#12395A" stroke-width="6"/><g fill="#C99A55" opacity=".5"><circle cx="120" cy="520" r="6"/><circle cx="420" cy="560" r="5"/><circle cx="760" cy="500" r="7"/><circle cx="900" cy="580" r="5"/></g></svg>','fill'));
+    /* decoration: coral and fish swimming by */
+    [[4,58,11,'#FF7A59'],[93,54,10,'#B98CFF'],[50,50,8,'#FF8FA6']].forEach(function(c){area.appendChild(el(seaCoralSVG(c[3]),'','position:absolute;left:'+c[0]+'%;top:'+c[1]+'%;width:'+c[2]+'cqw;transform:translateX(-50%);pointer-events:none'))});
+    var fishC=['#FFB347','#7FE0A8','#FF7A8A','#7FC8FF','#FFE04D'];
+    for(var f=0;f<6;f++){var fl=el(seaFishSVG(fishC[f%5]),'swim'+(f%2?' rtl':''),'top:'+rnd(8,58)+'%;width:'+rnd(5,9)+'cqw;animation-duration:'+rnd(9,17)+'s;animation-delay:'+(-rnd(0,14))+'s;z-index:'+(f%3===0?8:1));area.appendChild(fl)}
+    /* hiding places */
+    var n=Math.min(9,5+idx+Math.min(S.ch,3)),kinds=['rock','weed','shell'],spots=[],used=[];
+    for(var i=0;i<n;i++){var x,y,t=0;do{x=rnd(9,91);y=rnd(62,84);t++}while(t<40&&used.some(function(u){return Math.abs(u[0]-x)<13&&Math.abs(u[1]-y)<12}));used.push([x,y]);spots.push({x:x,y:y,k:kinds[i%3]})}
+    spots=shuffle(spots);
+    var target=Math.floor(Math.random()*n),fakes=idx>=1||S.ch>=2?1:0,fakeAt=(target+1+Math.floor(Math.random()*(n-1)))%n,found=false,gen=S.gen,t0=Date.now(),opened=0;
+    var NAMEK={rock:'מתחת לאבן',weed:'בין האצות',shell:'בתוך הצדף'};
+    spots.forEach(function(sp,i){
+      var hid=i===target?L.ch:(fakes&&i===fakeAt?pickDist(L.ch):null);
+      var wrap=el('','hide','left:'+sp.x+'%;top:'+sp.y+'%');area.appendChild(wrap);
+      if(hid){var lt=el(hid,'hidL');wrap.appendChild(lt)}else if(Math.random()<.5)wrap.appendChild(el('<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="12" fill="#fff" opacity=".7" stroke="#12395A" stroke-width="3"/></svg>','hidB'));
+      var ob=document.createElement('button');ob.type='button';ob.className='cover '+sp.k;ob.setAttribute('aria-label',NAMEK[sp.k]);
+      ob.innerHTML=sp.k==='rock'?seaRockSVG(['#8C9AAE','#7B8796','#9AA6B8'][i%3]):sp.k==='weed'?seaWeedSVG(['#3DBE8B','#2FA374','#5BCB6A'][i%3]):seaShellSVG();
+      wrap.appendChild(ob);sp.el=ob;sp.hid=hid;sp.wrap=wrap;
+      function reveal(){if(sp.open)return;sp.open=true;opened++;snd('whoosh');wrap.classList.add('shown');
+        if(hid===L.ch){found=true;win(sp)}
+        else if(hid){snd('soft');talk(GN('זו לא '+L.ch+', זו '+hid+'. נמשיך לחפש!','זו לא '+L.ch+', זו '+hid+'. נמשיך לחפש!'),{x:22,dy:14})}
+        else if(opened===2)talk('כאן אין כלום... אולי במקום אחר?',{x:22,dy:14})}
+      if(sp.k==='rock'){/* drag the rock aside */
+        var down=null;
+        ob.addEventListener('pointerdown',function(e){if(sp.open||found)return;e.preventDefault();try{ob.setPointerCapture(e.pointerId)}catch(x){}down=GL.uv(area,e)});
+        ob.addEventListener('pointermove',function(e){if(!down)return;var q=GL.uv(area,e),dx=(q[0]-down[0])*area.offsetWidth,dy=(q[1]-down[1])*area.offsetHeight;ob.style.transform='translate('+dx+'px,'+dy+'px)';
+          if(Math.hypot(dx,dy)>area.offsetWidth*.07){down=null;ob.classList.add('away');ob.style.transform='translate('+(dx>0?160:-160)+'%,10%) rotate('+(dx>0?25:-25)+'deg)';reveal()}});
+        ['pointerup','pointercancel'].forEach(function(ev){ob.addEventListener(ev,function(){if(down){down=null;ob.style.transform='';ob.classList.remove('wig');void ob.offsetWidth;ob.classList.add('wig');
+          if(!sp.told){sp.told=true;talk(GN('האבן כבדה! גררי אותה הצידה.','האבן כבדה! גרור אותה הצידה.'),{x:22,dy:14})}}})});
+      }else ob.addEventListener('click',function(){if(found)return;ob.classList.add('open');reveal()});
+    });
+    function win(sp){
+      snd('chime');var lt=sp.wrap.querySelector('.hidL');lt.classList.add('got');var p=centerOf(lt);burst(p.x,p.y,22,'star');cheer();
+      talk(GN('מצאת את '+L.ch+'!','מצאת את '+L.ch+'!'),{x:22,dy:14});
+      later(function(){stepListen(L,idx)},1600)}
+    later(function(){talk(GN('האות '+L.ch+' מתחבאת אי שם בים! חפשי מתחת לאבנים, בין האצות ובתוך הצדפים.','האות '+L.ch+' מתחבאת אי שם בים! חפש מתחת לאבנים, בין האצות ובתוך הצדפים.'),{x:22,dy:14,ms:6000})},500);
+    /* hints after 20 s and 35 s */
+    function hint(level){if(found||gen!==S.gen)return;var sp=spots[target];
+      talk('אולי '+NAMEK[sp.k]+'...?',{x:22,dy:14});sp.el.classList.remove('wig');void sp.el.offsetWidth;sp.el.classList.add('wig');if(level>1)sp.el.classList.add('glowc')}
+    later(function(){hint(1)},20000);later(function(){hint(2)},35000);
+  });
+}
+
 function frame(step,idx){
   mood('m-day');music('quest',[.42,.85,.5,.68][step]+idx*.05);HUD.hidden=false;hud();
   SC.appendChild(el(dotsHTML(step,4),'dots'));
