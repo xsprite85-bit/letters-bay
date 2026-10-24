@@ -19,4 +19,6 @@ for n in ('192','180'):
     s=s.replace('href="icon/icon-%s.png"'%n,'href="data:image/png;base64,'+base64.b64encode(open('icon/icon-%s.png'%n,'rb').read()).decode()+'"')
 s=s.replace('/*AUD*/{}',json.dumps(aud,ensure_ascii=False),1)
 open('letter-bay-game.html','w',encoding='utf8').write(s.replace(tag,'<script>'+lib+'</script>'))
+# standalone page for GitHub Pages / installed app: needs its own doctype and viewport (the artifact host adds these itself)
+open('index-pages.html','w',encoding='utf8').write('<!doctype html>\n<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">\n'+s.replace(tag,'<script>'+lib+'</script>')+'\n</html>')
 print('clips embedded:',len(aud),'size MB',round(os.path.getsize('letter-bay-game.html')/1e6,2))

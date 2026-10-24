@@ -11,6 +11,6 @@ Content: 7 chapters, 22 letters (מ ב א / ש ל ר / ד ג ה / נ ת ו / כ 
 Recorded narration (Gemini TTS, voice Kore) is generated a little each day inside the free quota:
 ```
 cd src/voice && GK=<gemini key> python3 daily_voice.py   # records missing clips, writes clips/*.mp3 + *.json and report.json
-cd .. && python3 build.py && cp letter-bay-game.html ../index.html
+cd .. && python3 build.py && cp index-pages.html ../index.html   # letter-bay-game.html is the Claude artifact version
 ```
 `build.py` embeds every clip whose text matches a narrated line. Word timings come from the Hebrew whisper model (ivrit-ai/whisper-large-v3-turbo-ct2).
