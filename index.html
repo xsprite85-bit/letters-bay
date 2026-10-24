@@ -3087,11 +3087,13 @@ function btn(txt,cls,fn,style){var b=document.createElement('button');b.type='bu
 function el(html,cls,style){var d=document.createElement('div');d.className=cls||'';d.style.cssText=style||'';d.innerHTML=html||'';return d}
 
 /* ---------- player name + avatar "next" prompt ---------- */
-var PN='';try{PN=(localStorage.getItem('lb_name')||'').replace(/[<>&"'`]/g,'').slice(0,14)}catch(e){}
+var PN='',PG='';try{PG=localStorage.getItem('lb_g')||''}catch(e){}
+function GN(f,m){return PG==='m'?m:f}
+try{PN=(localStorage.getItem('lb_name')||'').replace(/[<>&"'`]/g,'').slice(0,14)}catch(e){}
 /* The companion glides to the middle, talks, and is itself the big "next" button; it nudges again every few seconds. */
 function nextPrompt(parent,onTap,o){
   o=o||{};var x=o.x==null?50:o.x,y=o.y==null?50:o.y,w=o.w||22,gen=S.gen,fin=false,k=0;
-  var L=o.lines||['כל הכבוד'+(PN?' '+PN:'')+'! לחצי עליי ונמשיך!','אני כאן! לחצי עליי כדי להמשיך','מוכנה להמשיך'+(PN?', '+PN:'')+'? לחצי עליי!'];
+  var L=o.lines||['כל הכבוד'+(PN?' '+PN:'')+GN('! לחצי עליי ונמשיך!','! לחץ עליי ונמשיך!'),GN('אני כאן! לחצי עליי כדי להמשיך','אני כאן! לחץ עליי כדי להמשיך'),GN('מוכנה להמשיך','מוכן להמשיך')+(PN?', '+PN:'')+GN('? לחצי עליי!','? לחץ עליי!')];
   var hidden=COMP.style.opacity!=='1';
   drawComp();
   if(hidden){COMP.style.transition='none';place(112,y,w);void COMP.offsetWidth;COMP.style.transition=''}
@@ -3114,12 +3116,16 @@ function askName(){
     inp.style.cssText='width:100%;font:700 6cqw var(--f-read);text-align:center;direction:rtl;padding:1.4cqw 2cqw;border-radius:3cqw;border:.4cqw solid var(--ink);background:#fff;color:var(--ink);outline:none;box-shadow:0 .7cqw 0 var(--ink)';
     function ok(){
       var v=inp.value.replace(/[<>&"'`]/g,'').replace(/\s+/g,' ').trim().slice(0,14);
+      if(!PG){snd('soft');try{gw.animate([{transform:'translateX(0)'},{transform:'translateX(-1cqw)'},{transform:'translateX(1cqw)'},{transform:'translateX(0)'}],{duration:300})}catch(e){}return}
       if(!v){snd('soft');inp.focus();try{inp.animate([{transform:'translateX(0)'},{transform:'translateX(-1cqw)'},{transform:'translateX(1cqw)'},{transform:'translateX(0)'}],{duration:300})}catch(e){}return}
       PN=v;try{localStorage.setItem('lb_name',PN)}catch(e){}
       snd('chime');say('נעים מאוד, '+PN+'!');ob.disabled=true;later(story,1400)}
     var ob=btn('יאללה!','gold',ok,'font-size:4.2cqw;padding:1.2cqw 7cqw');
     inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();ok()}});
-    box.appendChild(inp);box.appendChild(ob);SC.appendChild(box);
+    var gw=el('','','display:flex;gap:3cqw;justify-content:center'),gb={};
+    [['f','אני בת'],['m','אני בן']].forEach(function(o){var b=btn(o[1],'sm',function(){PG=o[0];try{localStorage.setItem('lb_g',PG)}catch(e){}snd('pop');sync()},'font-size:3.4cqw;padding:1cqw 4cqw');gb[o[0]]=b;gw.appendChild(b)});
+    function sync(){['f','m'].forEach(function(k){gb[k].classList.toggle('gold',PG===k);gb[k].style.opacity=(!PG||PG===k)?'1':'.55';gb[k].setAttribute('aria-pressed',String(PG===k))})}sync();
+    box.appendChild(gw);box.appendChild(inp);box.appendChild(ob);SC.appendChild(box);
     later(function(){say('שלום! איך קוראים לך?');try{inp.focus()}catch(e){}},500);
   });
 }
@@ -3133,7 +3139,7 @@ function title(){
   var lt='';'אבגדהוזחטיכלמנסעפצקרשת'.split('').forEach(function(c,i){
     lt+='<span class="drift" style="left:'+rnd(4,90)+'%;top:'+rnd(48,78)+'%;font-size:'+rnd(5,9)+'cqw;--dx:'+rnd(-3,3)+'cqw;--dy:'+rnd(-3,-1)+'cqw;--r:'+rnd(-20,20)+'deg;animation-duration:'+rnd(2.5,5)+'s;animation-iteration-count:infinite;animation-direction:alternate">'+c+'</span>'});
   d.appendChild(el(lt,'fill'));
-  d.appendChild(btn('התחילי הרפתקה','',function(){initAudio();if(!document.fullscreenElement&&!GL.rot)goFull();snd('whoosh');if(PN)story();else askName()},'position:absolute;bottom:9cqw;left:50%;transform:translateX(-50%);font-size:4cqw;padding:1.4cqw 6cqw'));
+  d.appendChild(btn('יוצאים להרפתקה','',function(){initAudio();if(!document.fullscreenElement&&!GL.rot)goFull();snd('whoosh');if(PN&&PG)story();else askName()},'position:absolute;bottom:9cqw;left:50%;transform:translateX(-50%);font-size:4cqw;padding:1.4cqw 6cqw'));
   d.appendChild(btn('בחירת פרק','sm',function(){chapterPicker()},'position:absolute;bottom:3cqw;left:3cqw;font-size:1.9cqw;padding:.5cqw 1.6cqw;opacity:.85'));
   d.appendChild(el('הצלילים יתחילו אחרי הלחיצה','', 'position:absolute;bottom:3.5cqw;left:0;right:0;text-align:center;color:#fff;font-size:1.9cqw;opacity:.85;pointer-events:none'));
   SC.appendChild(d);
@@ -3152,8 +3158,8 @@ function episode(tag,text,next,o){
   });
 }
 function episode1(){
-  var n=NAMES[S.comp]||NAMES.t;
-  episode('פרק 1 · הבקבוק המנצנץ','אַתְּ וְ'+n[0]+' '+n[1]+' בַּמִּפְרָץ הַשָּׁקֵט. פִּתְאֹם מַשֶּׁהוּ מַנְצִיץ בַּחוֹל! זֶה בַּקְבּוּק קָטָן, וּבְתוֹכוֹ פֶּתֶק: ״הָאוֹתִיּוֹת הָרִאשׁוֹנוֹת מְחַכּוֹת בָּאִי הַקָּרוֹב״. בּוֹאוּ נִמְצָא אוֹתָן!',function(){map(true)},{comp:[22,52,15],
+  var n=(NAMES[S.comp]||NAMES.t).slice();if(PG==='m')n[1]='מְטַיְּלִים';
+  episode('פרק 1 · הבקבוק המנצנץ',GN('אַתְּ וְ','אַתָּה וְ')+n[0]+' '+n[1]+' בַּמִּפְרָץ הַשָּׁקֵט. פִּתְאֹם מַשֶּׁהוּ מַנְצִיץ בַּחוֹל! זֶה בַּקְבּוּק קָטָן, וּבְתוֹכוֹ פֶּתֶק: ״הָאוֹתִיּוֹת הָרִאשׁוֹנוֹת מְחַכּוֹת בָּאִי הַקָּרוֹב״. בּוֹאוּ נִמְצָא אוֹתָן!',function(){map(true)},{comp:[22,52,15],
     draw:function(){SC.appendChild(el('<svg viewBox="0 0 120 200" style="width:100%"><rect x="44" y="6" width="32" height="26" rx="6" fill="#C98A4A" stroke="#12395A" stroke-width="5"/><path d="M48 30 H72 V52 Q104 66 104 104 V176 Q104 194 86 194 H34 Q16 194 16 176 V104 Q16 66 48 52Z" fill="#BFF3FF" fill-opacity=".8" stroke="#12395A" stroke-width="5" stroke-linejoin="round"/><rect x="36" y="100" width="48" height="62" rx="4" fill="#FFF3C4" stroke="#12395A" stroke-width="4" transform="rotate(-8 60 130)"/><path d="M44 118h32M44 132h32M44 146h22" stroke="#12395A" stroke-width="4" stroke-linecap="round" transform="rotate(-8 60 130)"/><path d="M32 90Q30 110 34 140" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".8" fill="none"/></svg>','bobi','position:absolute;left:78%;top:20%;width:15cqw;transform:translateX(-50%)'))}});
 }
 function story(){
@@ -3163,7 +3169,7 @@ function story(){
       {t:'בַּלַּיְלָה אֶחָד הִתְחוֹלְלָה סְעָרָה גְּדוֹלָה בַּמִּפְרָץ...',fx:'storm'},
       {t:'הַסְּעָרָה פִּזְּרָה אֶת כָּל הָאוֹתִיּוֹת שֶׁל הַמִּפְרָץ לְכָל עֵבֶר!',fx:'scatter'},
       {t:'בְּלִי אוֹתִיּוֹת אִי אֶפְשָׁר לִקְרֹא שְׁלָטִים, מַפּוֹת אוֹ סוֹדוֹת שֶׁל הַיָּם.',fx:'quiet'},
-      {t:'רַק מִי שֶׁלּוֹמֶדֶת לִקְרֹא יְכוֹלָה לִמְצֹא אוֹתָן. מִי תַּעֲזֹר לָנוּ'+(PN?', '+PN:'')+'?',fx:'ask'}
+      {t:GN('רַק מִי שֶׁלּוֹמֶדֶת לִקְרֹא יְכוֹלָה לִמְצֹא אוֹתָן. מִי תַּעֲזֹר לָנוּ','רַק מִי שֶׁלּוֹמֵד לִקְרֹא יָכוֹל לִמְצֹא אוֹתָן. מִי יַעֲזֹר לָנוּ')+(PN?', '+PN:'')+'?',fx:'ask'}
     ],i=0,stopN=null;
     var wrap=el('','fill');SC.appendChild(wrap);
     function show(){
@@ -3172,7 +3178,7 @@ function story(){
       if(p.fx==='scatter'){var h='';'אבגדהוזחטיכלמנסעפצקרשת'.split('').forEach(function(c){h+='<span class="drift" style="left:'+rnd(30,70)+'%;top:'+rnd(35,60)+'%;font-size:'+rnd(5,10)+'cqw;--dx:'+rnd(-70,70)+'cqw;--dy:'+rnd(-45,40)+'cqw;--r:'+rnd(-360,360)+'deg;animation-duration:'+rnd(2.2,4.5)+'s">'+c+'</span>'});wrap.appendChild(el(h,'fill'));snd('whoosh')}
       if(p.fx==='quiet'){wrap.appendChild(el('<div style="position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);font-size:18cqw;color:#fff;opacity:.7;font-family:var(--f-read);font-weight:700" class="bobi">?</div>',''))}
       if(p.fx==='ask'){drawComp();place(50,48,22);COMP.style.opacity='1'}
-      var sb=el('','story fade');wrap.appendChild(sb);if(stopN)stopN();music(p.fx==='storm'?'storm':p.fx==='scatter'?'storm':p.fx==='quiet'?'mystery':'mystery',{storm:.5,scatter:1,quiet:.2,ask:.55}[p.fx]);stopN=narrate(sb,p.t,{done:function(){nextPrompt(wrap,function(){if(last){pick()}else{i++;show()}},last?{x:50,y:48,w:22,lines:['מוכנה'+(PN?', '+PN:'')+'? לחצי עליי ונתחיל בהרפתקה!','אני מחכה לך! לחצי עליי!']}:{x:50,y:46,w:20})}});
+      var sb=el('','story fade');wrap.appendChild(sb);if(stopN)stopN();music(p.fx==='storm'?'storm':p.fx==='scatter'?'storm':p.fx==='quiet'?'mystery':'mystery',{storm:.5,scatter:1,quiet:.2,ask:.55}[p.fx]);stopN=narrate(sb,p.t,{done:function(){nextPrompt(wrap,function(){if(last){pick()}else{i++;show()}},last?{x:50,y:48,w:22,lines:[GN('מוכנה','מוכן')+(PN?', '+PN:'')+GN('? לחצי עליי ונתחיל בהרפתקה!','? לחץ עליי ונתחיל בהרפתקה!'),GN('אני מחכה לך! לחצי עליי!','אני מחכה לך! לחץ עליי!')]}:{x:50,y:46,w:20})}});
       var last=i===P.length-1;
       wrap.appendChild(btn(last?'אני אעזור!':'הלאה','gold sm',function(){if(last){pick()}else{i++;show()}},'position:absolute;top:3.4cqw;left:3cqw'));
     }
@@ -3182,7 +3188,7 @@ function story(){
 function pick(){
   go(function(){
     mood('m-day');HUD.hidden=true;hideComp();
-    SC.appendChild(el('מי תצטרף אלייך להרפתקה'+(PN?', '+PN:'')+'?','ttl fade','position:absolute;top:5cqw;left:0;right:0;font-size:5.4cqw'));
+    SC.appendChild(el(GN('מי תצטרף אלייך להרפתקה','מי יצטרף אליך להרפתקה')+(PN?', '+PN:'')+'?','ttl fade','position:absolute;top:5cqw;left:0;right:0;font-size:5.4cqw'));
     var row=el('','','position:absolute;left:0;right:0;top:24cqw;display:flex;justify-content:center;gap:3cqw');
     [['t','גלי הצב','רגוע וחם'],['o','תמי התמנונית','מציירת אותיות'],['g','נוני הדג הזוהר','שובב ומאיר']].forEach(function(c,i){
       var b=document.createElement('button');b.type='button';b.className='card pop-in';b.style.cssText='width:26cqw;padding:1.6cqw;animation-delay:'+i*.15+'s;color:var(--ink)';
@@ -3220,7 +3226,7 @@ function map(first){
     function moveTo(x,y,fn){COMP.style.left=x+'%';COMP.style.top=y+'%';snd('whoosh');later(fn,1000)}
     if(!done){
       i1.addEventListener('click',function(){moveTo(72,64,function(){lesson(cntCh())})});
-      later(function(){talk(first&&S.ch===0?'וואו, אי ראשון! בואי נחפש שם את האותיות הראשונות.':first?'הגענו! בואי נחפש כאן את האותיות של הפרק.':'בואי נמשיך לחפש. לחצי על האי!',{x:60,dy:15})},700);
+      later(function(){talk(first&&S.ch===0?GN('וואו, אי ראשון! בואי נחפש שם את האותיות הראשונות.','וואו, אי ראשון! בוא נחפש שם את האותיות הראשונות.'):first?GN('הגענו! בואי נחפש כאן את האותיות של הפרק.','הגענו! בוא נחפש כאן את האותיות של הפרק.'):GN('בואי נמשיך לחפש. לחצי על האי!','בוא נמשיך לחפש. לחץ על האי!'),{x:60,dy:15})},700);
     }else if(!S.chestDone){
       ch.addEventListener('click',function(){moveTo(46,74,function(){chest(0)})});
       later(function(){talk('מצאנו את כל האותיות של האי! ומה זה שם למטה? תיבת אוצר!',{x:44,dy:16})},700);
@@ -3259,7 +3265,7 @@ function stepListen(L,idx){
     next=btn('הלאה ←','gold','function',"position:absolute;bottom:4cqw;left:50%;transform:translateX(-50%)");
     next.hidden=true;next.onclick=null;next.addEventListener('click',function(){stepCatch(L,idx)});
     SC.appendChild(next);
-    later(function(){talk('שלום! הנה אות שאבדה בסערה. לחצי עליה ותשמעי איך קוראים לה.',{x:32,dy:17})},500);
+    later(function(){talk(GN('שלום! הנה אות שאבדה בסערה. לחצי עליה ותשמעי איך קוראים לה.','שלום! הנה אות שאבדה בסערה. לחץ עליה ותשמע איך קוראים לה.'),{x:32,dy:17})},500);
   });
 }
 function stepCatch(L,idx){
@@ -3268,7 +3274,7 @@ function stepCatch(L,idx){
     var need=3,got=0,gen=S.gen;
     var cnt=el('','row','position:absolute;top:13.5cqw;left:50%;transform:translateX(-50%);z-index:5');
     function cr(){var h='';for(var i=0;i<need;i++)h+='<div class="slot'+(i<got?' on':'')+'" style="width:5cqw;height:5cqw">'+(i<got?L.ch:'')+'</div>';cnt.innerHTML=h}cr();SC.appendChild(cnt);
-    later(function(){talk('פוצצי רק את הבועות עם האות '+L.name+'. '+L.ch+'!',{x:32,dy:17})},400);
+    later(function(){talk(GN('פוצצי רק את הבועות עם האות ','פוצץ רק את הבועות עם האות ')+L.name+'. '+L.ch+'!',{x:32,dy:17})},400);
     var area=el('','fill');SC.appendChild(area);
     function spawn(){
       if(gen!==S.gen)return;
@@ -3296,7 +3302,7 @@ function stepTrace(L,idx){
     var bar=el('<b></b>','bar');box.appendChild(bar);
     var nx=btn('הלאה ←','gold','function',"position:absolute;bottom:3.5cqw;left:50%;transform:translateX(-50%)");nx.hidden=true;nx.onclick=null;
     nx.addEventListener('click',function(){stepWord(L,idx)});SC.appendChild(nx);
-    talk('עכשיו נצייר! עברי עם האצבע על האות כדי למלא אותה.',{x:34,dy:18});
+    talk(GN('עכשיו נצייר! עברי עם האצבע על האות כדי למלא אותה.','עכשיו נצייר! עבור עם האצבע על האות כדי למלא אותה.'),{x:34,dy:18});
     var cells=[],cov,fin=false,total=1,hit=0,mk=document.createElement('canvas');mk.width=W;mk.height=H;
     function prep(){
       var g=cg.getContext('2d');g.clearRect(0,0,W,H);g.font='700 '+H*.95+'px "Noto Sans Hebrew",Rubik,sans-serif';g.textAlign='center';g.textBaseline='alphabetic';
@@ -3320,7 +3326,7 @@ function stepTrace(L,idx){
       fin=true;snd('win');cheer();
       u.fillStyle='#FFC83D';u.fillRect(0,0,W,H);clip();
       var p=centerOf(box);burst(p.x,p.y,26,'star');box.style.borderColor='var(--gold)';
-      talk('ציירת את '+L.ch+' כמו אמנית!',{x:34,dy:18});later(function(){nx.hidden=false;nx.classList.add('pop-in')},400);
+      talk('ציירת את '+L.ch+GN(' כמו אמנית!',' כמו אמן!'),{x:34,dy:18});later(function(){nx.hidden=false;nx.classList.add('pop-in')},400);
     }
     cu.addEventListener('pointerdown',function(e){e.preventDefault();try{cu.setPointerCapture(e.pointerId)}catch(x){}down=true;var p=pos(e);lx=p[0];ly=p[1];mark(lx,ly);u.beginPath();u.arc(lx,ly,16,0,7);u.fillStyle='rgba(255,122,89,.9)';u.fill();clip();initAudio()});
     cu.addEventListener('pointermove',function(e){if(!down)return;e.preventDefault();var p=pos(e);
@@ -3345,7 +3351,7 @@ function stepWord(L,idx){
       t.addEventListener('click',function(){snd('pop');say(p,.7);t.classList.remove('hit');void t.offsetWidth;t.classList.add('hit');
         if(!shown){shown=true;later(function(){nx.hidden=false;nx.classList.add('pop-in')},400)}});
       tl.appendChild(t)});
-      if(stopW)stopW();stopW=narrate(cb,k===0?'הַמִּלָּה '+w+'. שָׁמַעְתְּ אֵיךְ הִיא מַתְחִילָה? הִנֵּה הָאוֹת '+L.ch+', זְהֻבָּה.':'עוֹד מִלָּה: '+w+'.')}
+      if(stopW)stopW();stopW=narrate(cb,k===0?'הַמִּלָּה '+w+GN('. שָׁמַעְתְּ אֵיךְ הִיא מַתְחִילָה? הִנֵּה הָאוֹת ','. שָׁמַעְתָּ אֵיךְ הִיא מַתְחִילָה? הִנֵּה הָאוֹת ')+L.ch+'.':'עוֹד מִלָּה: '+w+'.')}
     SC.appendChild(tl);
     var wb=btn('לשמוע את המילה','sm',function(){say(w,.7);snd('chime')},'position:absolute;top:72%;left:50%;transform:translateX(-50%)');SC.appendChild(wb);
     if(WL.length>1){var mb=btn('עוד מילה עם '+L.ch,'sm',function(){snd('whoosh');showWord((wi+1)%WL.length)},'position:absolute;top:72%;left:76%;transform:translateX(-50%)');SC.appendChild(mb)}
@@ -3371,7 +3377,7 @@ function chest(r){
     mood('m-deep');music('quest',.92);HUD.hidden=false;hud();place(12,74,15);
     var RR=ROUNDS()[r],alt=(RR.more&&RR.more.length)?RR.more[Math.floor(Math.random()*RR.more.length)]:[RR.word,RR.icon],word=alt[0],key=alt[1],parts=gr(word);
     var used=0,wrong=0,locked=false;
-    SC.appendChild(el('הארגז נעול! קראי את הקוד ומצאי מה הוא','ttl fade','position:absolute;top:9cqw;left:0;right:0;font-size:3.2cqw'));
+    SC.appendChild(el(GN('הארגז נעול! קראי את הקוד ומצאי מה הוא','הארגז נעול! קרא את הקוד ומצא מה הוא'),'ttl fade','position:absolute;top:9cqw;left:0;right:0;font-size:3.2cqw'));
     var cw=el(chestSVG(),'','position:absolute;left:50%;top:38%;width:27cqw;transform:translate(-50%,-50%)');cw.id='chest';SC.appendChild(cw);
     var tl=el('','tiles','position:absolute;left:0;right:0;top:46%;z-index:3;transform:scale(.62)');SC.appendChild(tl);
     var tiles=parts.map(function(p,i){var t=document.createElement('button');t.type='button';t.className='tile';t.textContent=p;
@@ -3385,16 +3391,16 @@ function chest(r){
         else{wrong++;snd('soft');c.classList.add('no');cheerNo();}
       });cbs.push([o,c]);cards.appendChild(c)});
     SC.appendChild(cards);
-    function cheerNo(){talk('כמעט! בואי נקרא שוב, אות אחרי אות.',{x:30,dy:17})}
+    function cheerNo(){talk(GN('כמעט! בואי נקרא שוב, אות אחרי אות.','כמעט! בוא נקרא שוב, אות אחרי אות.'),{x:30,dy:17})}
     var hb=btn('רמז','gold sm',function(){
       used++;if(used===1){tiles[0].classList.add('hl');say(parts[0],.7);talk('נתחיל מהאות הראשונה. איך היא נשמעת?',{x:30,dy:17})}
       else if(used===2){tiles[0].classList.add('hl');tiles[1]&&tiles[1].classList.add('hl');say(parts[0]+parts[1],.6);talk('נחבר את שתי הראשונות ביחד!',{x:30,dy:17})}
-      else{say(word,.7);cbs.forEach(function(x){if(x[0]===key)x[1].classList.add('glow');else if(x[0]!==key&&Math.random()<2)x[1].classList.add('ghost')});cbs.forEach(function(x){if(x[0]===key)x[1].classList.remove('ghost')});talk('נקרא יחד: '+word+'! בחרי את התמונה.',{x:30,dy:17});hb.disabled=true}
+      else{say(word,.7);cbs.forEach(function(x){if(x[0]===key)x[1].classList.add('glow');else if(x[0]!==key&&Math.random()<2)x[1].classList.add('ghost')});cbs.forEach(function(x){if(x[0]===key)x[1].classList.remove('ghost')});talk('נקרא יחד: '+word+GN('! בחרי את התמונה.','! בחר את התמונה.'),{x:30,dy:17});hb.disabled=true}
       hb.textContent='רמז ('+Math.min(used,3)+'/3)';
     },'position:absolute;top:9cqw;left:3cqw');
     SC.appendChild(hb);
     SC.appendChild(btn('לשמוע את הקוד','sm',function(){say(word,.7)},'position:absolute;top:19cqw;left:3cqw'));
-    later(function(){talk('קראי את הקוד על הארגז, אות אחרי אות. אפשר ללחוץ על כל אות כדי לשמוע אותה.',{x:30,dy:17})},500);
+    later(function(){talk(GN('קראי את הקוד על הארגז, אות אחרי אות. אפשר ללחוץ על כל אות כדי לשמוע אותה.','קרא את הקוד על הארגז, אות אחרי אות. אפשר ללחוץ על כל אות כדי לשמוע אותה.'),{x:30,dy:17})},500);
     function win(c){
       c.classList.add('win');snd('win');cheer();cw.classList.add('open');
       var earned=Math.max(1,3-Math.min(2,used+wrong>0?(used>=3?2:used+(wrong?1:0)):0));
@@ -3477,7 +3483,7 @@ function finale(){
     SC.appendChild(el(l,'row','position:absolute;left:50%;top:21%;transform:translateX(-50%);width:62cqw;flex-wrap:wrap;justify-content:center;gap:1.1cqw;direction:rtl'));
     for(var k=0;k<5;k++)(function(k){later(function(){burst(G.clientWidth*rnd(.25,.8),G.clientHeight*rnd(.15,.4),26,'star');snd('coin')},500+k*700)})(k);
     var sb=el('','story ep fade');SC.appendChild(sb);
-    later(function(){narrate(sb,'מָצָאנוּ אֶת כָּל הָאוֹתִיּוֹת! וְאַתְּ קָרָאת הַכֹּל בְּעַצְמֵךְ. תּוֹדָה, מְגַלָּה הָאוֹתִיּוֹת! בַּפַּעַם הַבָּאָה: חָמֵשׁ אוֹתִיּוֹת סוֹפִיּוֹת וְסוֹד אֶחָד גָּדוֹל.')},1200);
+    later(function(){narrate(sb,'מָצָאנוּ אֶת כָּל הָאוֹתִיּוֹת! '+GN('וְאַתְּ קָרָאת הַכֹּל בְּעַצְמֵךְ. תּוֹדָה, מְגַלַּת הָאוֹתִיּוֹת!','וְאַתָּה קָרָאתָ הַכֹּל בְּעַצְמְךָ. תּוֹדָה, מְגַלֵּה הָאוֹתִיּוֹת!')+' בַּפַּעַם הַבָּאָה: חָמֵשׁ אוֹתִיּוֹת סוֹפִיּוֹת וְסוֹד אֶחָד גָּדוֹל.')},1200);
     var d=el('','dock');d.appendChild(btn('לחנות','sm',function(){shop('map')}));d.appendChild(btn('לשחק שוב','gold sm',function(){S=fresh();syncTg();title()}));SC.appendChild(d);
   });
 }
