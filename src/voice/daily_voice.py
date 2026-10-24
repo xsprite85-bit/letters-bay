@@ -40,9 +40,9 @@ def load16k(p):
 
 class Quota(Exception): pass
 
-def tts(text, out):
+def tts(text, out, voice=VOICE):
     body = {"contents": [{"parts": [{"text": text}]}], "generationConfig": {"responseModalities": ["AUDIO"],
-            "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": VOICE}}}}}
+            "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}
     req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{TTS}:generateContent",
                                  json.dumps(body).encode(), {"Content-Type": "application/json", "x-goog-api-key": os.environ['GK']})
     for attempt in range(5):
@@ -85,7 +85,7 @@ def cut(wav, a, b, out):
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', f'{a:.3f}', '-to', f'{b:.3f}', '-i', wav, '-ac', '1', '-ar', '24000', '-b:a', '48k', out], check=True)
 
 def batches(items):
-    words = [it for it in items if it['kind'] != 'story']; story = [it for it in items if it['kind'] == 'story']
+    words = [it for it in items if it['kind'] == 'word']; story = [it for it in items if it['kind'] == 'story']
     out = []
     for i in range(0, len(words), 30): out.append(words[i:i + 30])
     cur, n = [], 0
@@ -93,6 +93,12 @@ def batches(items):
         if cur and n + len(it['text']) > 650: out.append(cur); cur, n = [], 0
         cur.append(it); n += len(it['text'])
     if cur: out.append(cur)
+    # companion lines last (narration first), one batch per voice of up to 20 lines
+    comp = {}
+    for it in items:
+        if it['kind'] == 'comp': comp.setdefault(it['voice'], []).append(it)
+    for v, lst in comp.items():
+        for i in range(0, len(lst), 20): out.append(lst[i:i + 20])
     return out
 
 def main():
@@ -113,7 +119,7 @@ def main():
         parts = [it['text'] if re.search(r'[.!?…]$', it['text']) else it['text'] + '.' for it in group]
         text = ' '.join(parts); raw = os.path.join(RAW, f'batch{bi}_{int(time.time())}.wav')
         try:
-            dur = tts(text, raw); report['requests'] += 1
+            dur = tts(text, raw, group[0].get('voice', VOICE)); report['requests'] += 1
         except Quota as q:
             report['stopped'] = 'daily quota: ' + str(q)[:120]; break
         toks = text.split(); T, ex = token_times(raw, toks)
@@ -126,7 +132,7 @@ def main():
             if okfrac < .6: report['weak'].append({'id': it['id'], 'text': it['text'], 'matched': round(okfrac, 2)})
             cut(raw, s, e, os.path.join(CLIPS, it['id'] + '.mp3'))
             w = [[round(float(x - s), 2), round(float(y - s), 2)] for x, y in T[a:b + 1]]
-            json.dump({'text': it['text'], 'dur': round(float(e - s), 2), 'w': w, 'matched': round(okfrac, 2)},
+            json.dump(dict({'text': it['text'], 'dur': round(float(e - s), 2), 'w': w, 'matched': round(okfrac, 2)}, **({'comp': it['comp'], 'voice': it['voice']} if it.get('comp') else {})),
                       open(os.path.join(CLIPS, it['id'] + '.json'), 'w', encoding='utf8'), ensure_ascii=False)
             report['done'].append(it['id'])
         time.sleep(25)

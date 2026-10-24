@@ -498,5 +498,845 @@
   "id": "word_צ3",
   "kind": "word",
   "text": "צְפַרְדֵּעַ"
+ },
+ {
+  "id": "ct_3d27aj",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "מצאנו את כל האותיות של האי! ומה זה שם למטה? תיבת אוצר!"
+ },
+ {
+  "id": "ct_mq6h7k",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "שיחקנו יפה היום! נמשיך מחר, אני אשמור לך את המקום."
+ },
+ {
+  "id": "ct_1bxc2uu",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "כאן אין כלום... אולי במקום אחר?"
+ },
+ {
+  "id": "ct_16g1ik1",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "האבן כבדה! גררי אותה הצידה."
+ },
+ {
+  "id": "ct_fbrqsd",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "האבן כבדה! גרור אותה הצידה."
+ },
+ {
+  "id": "ct_ip37qu",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "שלום! הנה אות שאבדה בסערה. לחצי עליה ותשמעי איך קוראים לה."
+ },
+ {
+  "id": "ct_1q04wl",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "שלום! הנה אות שאבדה בסערה. לחץ עליה ותשמע איך קוראים לה."
+ },
+ {
+  "id": "ct_1l0v2bs",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "כל הכבוד! תפסת את כולן!"
+ },
+ {
+  "id": "ct_5fe62y",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "נסי שוב, מלמעלה למטה."
+ },
+ {
+  "id": "ct_1vzopdz",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "נסה שוב, מלמעלה למטה."
+ },
+ {
+  "id": "ct_5irzy",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "הנה האות, נכתוב אותה ביחד."
+ },
+ {
+  "id": "ct_1ad6hy8",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "מתחילים בנקודה הירוקה והולכים עם החץ."
+ },
+ {
+  "id": "ct_hsonkr",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "זוכרים הכול! יוצאים לדרך."
+ },
+ {
+  "id": "ct_1p0634",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "כמעט! בואי נקרא שוב, אות אחרי אות."
+ },
+ {
+  "id": "ct_qp1jc9",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "כמעט! בוא נקרא שוב, אות אחרי אות."
+ },
+ {
+  "id": "ct_1hbz1to",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "נתחיל מהאות הראשונה. איך היא נשמעת?"
+ },
+ {
+  "id": "ct_hxqe21",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "נחבר את שתי הראשונות ביחד!"
+ },
+ {
+  "id": "ct_1b7xjhu",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "קראי את הקוד על הארגז, אות אחרי אות. אפשר ללחוץ על כל אות כדי לשמוע אותה."
+ },
+ {
+  "id": "ct_155davf",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "קרא את הקוד על הארגז, אות אחרי אות. אפשר ללחוץ על כל אות כדי לשמוע אותה."
+ },
+ {
+  "id": "ct_1jdtbya",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "הצלחנו! עכשיו אפשר להתקשט בחנות."
+ },
+ {
+  "id": "ct_r7hzbi",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "איזה יופי! זה בדיוק בשבילי."
+ },
+ {
+  "id": "ct_s4vvgl",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "כל המטבעות ששווים כאן נאספו מהאותיות שמצאת!"
+ },
+ {
+  "id": "ct_1jkq4b3",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "ct_1xph4k8",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "הסיפור הולך ומסתבך... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "ct_1lua02p",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "מה מחכה לנו שם? לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "ct_nwkaii",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "יש אור בקצה המנהרה... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "ct_12ca1jx",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "משהו מנצנץ במרחק... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "ct_zevvde",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "הסערה מתחזקת... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "ct_19zwpm2",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "לאן עפו כל האותיות? לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "ct_1662riy",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "אז מה עושים עכשיו? לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "ct_r5xlud",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "ct_rwd80y",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "הסיפור הולך ומסתבך... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "ct_zdytrv",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "מה מחכה לנו שם? לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "ct_1bi2xz4",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "יש אור בקצה המנהרה... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "ct_ii3r0n",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "משהו מנצנץ במרחק... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "ct_1j5jjl4",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "הסערה מתחזקת... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "ct_15ds4cw",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "לאן עפו כל האותיות? לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "ct_gryvfk",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "אז מה עושים עכשיו? לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "ct_5tvbq6",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "אני כאן! לחצי עליי כדי להמשיך"
+ },
+ {
+  "id": "ct_kb941w",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "אני כאן! לחץ עליי כדי להמשיך"
+ },
+ {
+  "id": "co_3d27aj",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "מצאנו את כל האותיות של האי! ומה זה שם למטה? תיבת אוצר!"
+ },
+ {
+  "id": "co_mq6h7k",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "שיחקנו יפה היום! נמשיך מחר, אני אשמור לך את המקום."
+ },
+ {
+  "id": "co_1bxc2uu",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "כאן אין כלום... אולי במקום אחר?"
+ },
+ {
+  "id": "co_16g1ik1",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "האבן כבדה! גררי אותה הצידה."
+ },
+ {
+  "id": "co_fbrqsd",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "האבן כבדה! גרור אותה הצידה."
+ },
+ {
+  "id": "co_ip37qu",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "שלום! הנה אות שאבדה בסערה. לחצי עליה ותשמעי איך קוראים לה."
+ },
+ {
+  "id": "co_1q04wl",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "שלום! הנה אות שאבדה בסערה. לחץ עליה ותשמע איך קוראים לה."
+ },
+ {
+  "id": "co_1l0v2bs",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "כל הכבוד! תפסת את כולן!"
+ },
+ {
+  "id": "co_5fe62y",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "נסי שוב, מלמעלה למטה."
+ },
+ {
+  "id": "co_1vzopdz",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "נסה שוב, מלמעלה למטה."
+ },
+ {
+  "id": "co_5irzy",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "הנה האות, נכתוב אותה ביחד."
+ },
+ {
+  "id": "co_1ad6hy8",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "מתחילים בנקודה הירוקה והולכים עם החץ."
+ },
+ {
+  "id": "co_hsonkr",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "זוכרים הכול! יוצאים לדרך."
+ },
+ {
+  "id": "co_1p0634",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "כמעט! בואי נקרא שוב, אות אחרי אות."
+ },
+ {
+  "id": "co_qp1jc9",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "כמעט! בוא נקרא שוב, אות אחרי אות."
+ },
+ {
+  "id": "co_1hbz1to",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "נתחיל מהאות הראשונה. איך היא נשמעת?"
+ },
+ {
+  "id": "co_hxqe21",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "נחבר את שתי הראשונות ביחד!"
+ },
+ {
+  "id": "co_1b7xjhu",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "קראי את הקוד על הארגז, אות אחרי אות. אפשר ללחוץ על כל אות כדי לשמוע אותה."
+ },
+ {
+  "id": "co_155davf",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "קרא את הקוד על הארגז, אות אחרי אות. אפשר ללחוץ על כל אות כדי לשמוע אותה."
+ },
+ {
+  "id": "co_1jdtbya",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "הצלחנו! עכשיו אפשר להתקשט בחנות."
+ },
+ {
+  "id": "co_r7hzbi",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "איזה יופי! זה בדיוק בשבילי."
+ },
+ {
+  "id": "co_s4vvgl",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "כל המטבעות ששווים כאן נאספו מהאותיות שמצאת!"
+ },
+ {
+  "id": "co_1jkq4b3",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "co_1xph4k8",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "הסיפור הולך ומסתבך... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "co_1lua02p",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "מה מחכה לנו שם? לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "co_nwkaii",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "יש אור בקצה המנהרה... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "co_12ca1jx",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "משהו מנצנץ במרחק... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "co_zevvde",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "הסערה מתחזקת... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "co_19zwpm2",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "לאן עפו כל האותיות? לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "co_1662riy",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "אז מה עושים עכשיו? לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "co_r5xlud",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "co_rwd80y",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "הסיפור הולך ומסתבך... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "co_zdytrv",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "מה מחכה לנו שם? לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "co_1bi2xz4",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "יש אור בקצה המנהרה... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "co_ii3r0n",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "משהו מנצנץ במרחק... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "co_1j5jjl4",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "הסערה מתחזקת... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "co_15ds4cw",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "לאן עפו כל האותיות? לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "co_gryvfk",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "אז מה עושים עכשיו? לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "co_5tvbq6",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "אני כאן! לחצי עליי כדי להמשיך"
+ },
+ {
+  "id": "co_kb941w",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "אני כאן! לחץ עליי כדי להמשיך"
+ },
+ {
+  "id": "cg_3d27aj",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "מצאנו את כל האותיות של האי! ומה זה שם למטה? תיבת אוצר!"
+ },
+ {
+  "id": "cg_mq6h7k",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "שיחקנו יפה היום! נמשיך מחר, אני אשמור לך את המקום."
+ },
+ {
+  "id": "cg_1bxc2uu",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "כאן אין כלום... אולי במקום אחר?"
+ },
+ {
+  "id": "cg_16g1ik1",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "האבן כבדה! גררי אותה הצידה."
+ },
+ {
+  "id": "cg_fbrqsd",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "האבן כבדה! גרור אותה הצידה."
+ },
+ {
+  "id": "cg_ip37qu",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "שלום! הנה אות שאבדה בסערה. לחצי עליה ותשמעי איך קוראים לה."
+ },
+ {
+  "id": "cg_1q04wl",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "שלום! הנה אות שאבדה בסערה. לחץ עליה ותשמע איך קוראים לה."
+ },
+ {
+  "id": "cg_1l0v2bs",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "כל הכבוד! תפסת את כולן!"
+ },
+ {
+  "id": "cg_5fe62y",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "נסי שוב, מלמעלה למטה."
+ },
+ {
+  "id": "cg_1vzopdz",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "נסה שוב, מלמעלה למטה."
+ },
+ {
+  "id": "cg_5irzy",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "הנה האות, נכתוב אותה ביחד."
+ },
+ {
+  "id": "cg_1ad6hy8",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "מתחילים בנקודה הירוקה והולכים עם החץ."
+ },
+ {
+  "id": "cg_hsonkr",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "זוכרים הכול! יוצאים לדרך."
+ },
+ {
+  "id": "cg_1p0634",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "כמעט! בואי נקרא שוב, אות אחרי אות."
+ },
+ {
+  "id": "cg_qp1jc9",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "כמעט! בוא נקרא שוב, אות אחרי אות."
+ },
+ {
+  "id": "cg_1hbz1to",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "נתחיל מהאות הראשונה. איך היא נשמעת?"
+ },
+ {
+  "id": "cg_hxqe21",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "נחבר את שתי הראשונות ביחד!"
+ },
+ {
+  "id": "cg_1b7xjhu",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "קראי את הקוד על הארגז, אות אחרי אות. אפשר ללחוץ על כל אות כדי לשמוע אותה."
+ },
+ {
+  "id": "cg_155davf",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "קרא את הקוד על הארגז, אות אחרי אות. אפשר ללחוץ על כל אות כדי לשמוע אותה."
+ },
+ {
+  "id": "cg_1jdtbya",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "הצלחנו! עכשיו אפשר להתקשט בחנות."
+ },
+ {
+  "id": "cg_r7hzbi",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "איזה יופי! זה בדיוק בשבילי."
+ },
+ {
+  "id": "cg_s4vvgl",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "כל המטבעות ששווים כאן נאספו מהאותיות שמצאת!"
+ },
+ {
+  "id": "cg_1jkq4b3",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "cg_1xph4k8",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "הסיפור הולך ומסתבך... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "cg_1lua02p",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "מה מחכה לנו שם? לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "cg_nwkaii",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "יש אור בקצה המנהרה... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "cg_12ca1jx",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "משהו מנצנץ במרחק... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "cg_zevvde",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "הסערה מתחזקת... לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "cg_19zwpm2",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "לאן עפו כל האותיות? לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "cg_1662riy",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "אז מה עושים עכשיו? לחצי עליי ונמשיך!"
+ },
+ {
+  "id": "cg_r5xlud",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "cg_rwd80y",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "הסיפור הולך ומסתבך... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "cg_zdytrv",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "מה מחכה לנו שם? לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "cg_1bi2xz4",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "יש אור בקצה המנהרה... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "cg_ii3r0n",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "משהו מנצנץ במרחק... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "cg_1j5jjl4",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "הסערה מתחזקת... לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "cg_15ds4cw",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "לאן עפו כל האותיות? לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "cg_gryvfk",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "אז מה עושים עכשיו? לחץ עליי ונמשיך!"
+ },
+ {
+  "id": "cg_5tvbq6",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "אני כאן! לחצי עליי כדי להמשיך"
+ },
+ {
+  "id": "cg_kb941w",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "אני כאן! לחץ עליי כדי להמשיך"
  }
 ]

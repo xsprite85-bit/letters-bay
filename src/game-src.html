@@ -594,6 +594,9 @@ try{if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=
 var narTok=0,NAR={};
 /* pre-generated narration: AUD[text]={src,dur,w:[[start,end] per word]} (filled by build.py) */
 var AUD=/*AUD*/{};
+/* companions speak in their own voices: recorded clips AUDC[comp][text] when available, else the phone voice with their own pitch */
+var AUDC=/*AUDC*/{};
+var VOX={t:{v:'Umbriel',pitch:.78,rate:.86},o:{v:'Leda',pitch:1.35,rate:.98},g:{v:'Puck',pitch:1.6,rate:1.06}};
 function fishSVG(){return '<svg viewBox="0 0 120 70"><path d="M12 35 L-8 12 L-8 58z" fill="#FF8A3D" stroke="#12395A" stroke-width="4" stroke-linejoin="round"/><ellipse cx="62" cy="35" rx="46" ry="28" fill="#FFB347" stroke="#12395A" stroke-width="4"/><path d="M40 12 Q62 -6 84 14" fill="#FF7A59" stroke="#12395A" stroke-width="4" stroke-linejoin="round"/><ellipse cx="62" cy="48" rx="30" ry="12" fill="#FFE3B0" opacity=".8"/><circle cx="88" cy="28" r="9" fill="#fff" stroke="#12395A" stroke-width="3"/><circle cx="90" cy="28" r="4.5" fill="#12395A"/><path d="M96 46 Q104 50 110 44" fill="none" stroke="#12395A" stroke-width="3.5" stroke-linecap="round"/></svg>'}
 /* Slow storytelling narration: the spoken word lights up and a little fish hops from word to word. */
 function narrate(box,text,opts){
@@ -655,10 +658,11 @@ function narrate(box,text,opts){
   later(function(){if(tok!==narTok)return;pos(0,0);fish.style.opacity='1';startPhrases()},30);
   return function stop(){narTok++;tms.forEach(clearTimeout);try{speechSynthesis.cancel()}catch(e){}if(aud){try{aud.pause()}catch(e){}}}
 }
-function say(t,rate){duck(2200);
-  if(S.voice&&AUD[t]){try{speechSynthesis.cancel()}catch(e){}try{if(NAR.say)NAR.say.pause();NAR.say=new Audio(AUD[t].src);NAR.say.play().catch(function(){})}catch(e){}return}
+function say(t,rate,who){duck(2200);
+  var bank=who?(AUDC[who]||{}):AUD;
+  if(S.voice&&bank[t]){try{speechSynthesis.cancel()}catch(e){}try{if(NAR.say)NAR.say.pause();NAR.say=new Audio(bank[t].src);NAR.say.play().catch(function(){})}catch(e){}return}
   if(!S.voice||!('speechSynthesis' in window))return;
-  try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang='he-IL';if(voice)u.voice=voice;u.rate=rate||.8;u.pitch=1.1;speechSynthesis.speak(u)}catch(e){}
+  try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t),vx=who&&VOX[who];u.lang='he-IL';if(voice)u.voice=voice;u.rate=vx?vx.rate:(rate||.8);u.pitch=vx?vx.pitch:1.1;speechSynthesis.speak(u)}catch(e){}
 }
 
 /* ---------- art ---------- */
@@ -754,7 +758,7 @@ function talk(t,o){
   o=o||{};BUB.textContent=t;
   var W=G.clientWidth,H=G.clientHeight,x=(parseFloat(COMP.style.left)||50)/100*W,y=(parseFloat(COMP.style.top)||50)/100*H;
   BUB.style.left=Math.min(Math.max(x,W*.21),W*.79)+'px';BUB.style.top=Math.max(y-COMP.offsetHeight/2-H*.015,H*.2)+'px';
-  BUB.classList.add('on');if(o.speak!==false)say(o.say||t);
+  BUB.classList.add('on');if(o.speak!==false)say(o.say||t,null,S.comp||'t');
   clearTimeout(bubT);bubT=setTimeout(function(){BUB.classList.remove('on')},o.ms||4200);
 }
 function quiet(){BUB.classList.remove('on');try{speechSynthesis.cancel()}catch(e){}}
