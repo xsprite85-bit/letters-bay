@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#5FD0F2"/>
+      <stop offset=".55" stop-color="#1E86C4"/>
+      <stop offset="1" stop-color="#0B3E66"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFF3B0" stop-opacity=".95"/>
+      <stop offset=".6" stop-color="#FFD43D" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#FFD43D" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C9803F"/>
+      <stop offset="1" stop-color="#8A4E22"/>
+    </linearGradient>
+    <linearGradient id="lid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D99252"/>
+      <stop offset="1" stop-color="#A9622E"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <path d="M0 402 Q64 380 128 402 T256 402 T384 402 T512 402 V512 H0z" fill="#0B4F80" opacity=".55"/>
+  <path d="M0 432 Q64 412 128 432 T256 432 T384 432 T512 432 V512 H0z" fill="#083A5E" opacity=".7"/>
+  <g fill="#fff" opacity=".55"><circle cx="70" cy="120" r="7"/><circle cx="92" cy="86" r="4"/><circle cx="440" cy="150" r="6"/><circle cx="418" cy="112" r="3.5"/></g>
+  <ellipse cx="256" cy="230" rx="190" ry="150" fill="url(#glow)"/>
+  <!-- lid, open and tilted back -->
+  <path d="M120 236 L146 150 Q256 104 366 150 L392 236z" fill="url(#lid)" stroke="#12395A" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M140 222 L160 160 Q256 124 352 160 L372 222z" fill="#5A2E14" opacity=".55"/>
+  <!-- letters flying out -->
+  <g font-family="'Secular One','Rubik','Noto Sans Hebrew',Arial,sans-serif" font-weight="700" text-anchor="middle" stroke="#12395A" stroke-width="10" paint-order="stroke" stroke-linejoin="round">
+    <text x="168" y="196" font-size="112" fill="#FF7A59" transform="rotate(-16 168 196)">ג</text>
+    <text x="258" y="152" font-size="138" fill="#FFD43D">ב</text>
+    <text x="350" y="198" font-size="112" fill="#7FE0A8" transform="rotate(14 350 198)">א</text>
+  </g>
+  <g fill="#FFF3B0"><path d="M108 120 l7 16 16 7 -16 7 -7 16 -7 -16 -16 -7 16 -7z"/><path d="M410 92 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z"/><path d="M206 64 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4z"/></g>
+  <!-- chest body -->
+  <rect x="112" y="232" width="288" height="168" rx="22" fill="url(#wood)" stroke="#12395A" stroke-width="12"/>
+  <path d="M112 276 H400" stroke="#12395A" stroke-width="10"/>
+  <rect x="152" y="232" width="26" height="168" fill="#FFC83D" stroke="#12395A" stroke-width="8"/>
+  <rect x="334" y="232" width="26" height="168" fill="#FFC83D" stroke="#12395A" stroke-width="8"/>
+  <rect x="224" y="262" width="64" height="72" rx="12" fill="#FFC83D" stroke="#12395A" stroke-width="9"/>
+  <circle cx="256" cy="290" r="9" fill="#12395A"/><path d="M256 296 V316" stroke="#12395A" stroke-width="9" stroke-linecap="round"/>
+  <path d="M132 300 Q140 292 150 296" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" opacity=".35"/>
+</svg>

@@ -70,6 +70,16 @@
   "text": "מַיִם"
  },
  {
+  "id": "word_מ2",
+  "kind": "word",
+  "text": "מְכוֹנִית"
+ },
+ {
+  "id": "word_מ3",
+  "kind": "word",
+  "text": "מַפְתֵּחַ"
+ },
+ {
   "id": "let_ב",
   "kind": "word",
   "text": "בֵּית"
@@ -78,6 +88,16 @@
   "id": "word_ב",
   "kind": "word",
   "text": "בַּיִת"
+ },
+ {
+  "id": "word_ב2",
+  "kind": "word",
+  "text": "בַּלּוֹן"
+ },
+ {
+  "id": "word_ב3",
+  "kind": "word",
+  "text": "בָּנָנָה"
  },
  {
   "id": "let_א",
@@ -90,6 +110,16 @@
   "text": "אוֹר"
  },
  {
+  "id": "word_א2",
+  "kind": "word",
+  "text": "אַרְנָב"
+ },
+ {
+  "id": "word_א3",
+  "kind": "word",
+  "text": "אֳנִיָּה"
+ },
+ {
   "id": "let_ש",
   "kind": "word",
   "text": "שִׁין"
@@ -98,6 +128,16 @@
   "id": "word_ש",
   "kind": "word",
   "text": "שָׁעוֹן"
+ },
+ {
+  "id": "word_ש2",
+  "kind": "word",
+  "text": "שֶׁמֶשׁ"
+ },
+ {
+  "id": "word_ש3",
+  "kind": "word",
+  "text": "שׁוּעָל"
  },
  {
   "id": "let_ל",
@@ -110,6 +150,16 @@
   "text": "לֵב"
  },
  {
+  "id": "word_ל2",
+  "kind": "word",
+  "text": "לִימוֹן"
+ },
+ {
+  "id": "word_ל3",
+  "kind": "word",
+  "text": "לִוְיָתָן"
+ },
+ {
   "id": "let_ר",
   "kind": "word",
   "text": "רֵישׁ"
@@ -118,6 +168,16 @@
   "id": "word_ר",
   "kind": "word",
   "text": "רִמּוֹן"
+ },
+ {
+  "id": "word_ר2",
+  "kind": "word",
+  "text": "רַכֶּבֶת"
+ },
+ {
+  "id": "word_ר3",
+  "kind": "word",
+  "text": "רֶשֶׁת"
  },
  {
   "id": "let_ד",
@@ -130,6 +190,16 @@
   "text": "דָּג"
  },
  {
+  "id": "word_ד2",
+  "kind": "word",
+  "text": "דְּבוֹרָה"
+ },
+ {
+  "id": "word_ד3",
+  "kind": "word",
+  "text": "דֻּבִּי"
+ },
+ {
   "id": "let_ג",
   "kind": "word",
   "text": "גִּימֶל"
@@ -138,6 +208,16 @@
   "id": "word_ג",
   "kind": "word",
   "text": "גֶּזֶר"
+ },
+ {
+  "id": "word_ג2",
+  "kind": "word",
+  "text": "גְּלִידָה"
+ },
+ {
+  "id": "word_ג3",
+  "kind": "word",
+  "text": "גָּמָל"
  },
  {
   "id": "let_ה",
@@ -150,6 +230,16 @@
   "text": "הַר"
  },
  {
+  "id": "word_ה2",
+  "kind": "word",
+  "text": "הִיפּוֹפּוֹטָם"
+ },
+ {
+  "id": "word_ה3",
+  "kind": "word",
+  "text": "הֶלִיקוֹפְּטֶר"
+ },
+ {
   "id": "let_נ",
   "kind": "word",
   "text": "נוּן"
@@ -158,6 +248,16 @@
   "id": "word_נ",
   "kind": "word",
   "text": "נֵר"
+ },
+ {
+  "id": "word_נ2",
+  "kind": "word",
+  "text": "נָחָשׁ"
+ },
+ {
+  "id": "word_נ3",
+  "kind": "word",
+  "text": "נְמָלָה"
  },
  {
   "id": "let_ת",
@@ -170,6 +270,16 @@
   "text": "תַּפּוּחַ"
  },
  {
+  "id": "word_ת2",
+  "kind": "word",
+  "text": "תּוּת"
+ },
+ {
+  "id": "word_ת3",
+  "kind": "word",
+  "text": "תַּרְנְגוֹל"
+ },
+ {
   "id": "let_ו",
   "kind": "word",
   "text": "וָו"
@@ -178,6 +288,16 @@
   "id": "word_ו",
   "kind": "word",
   "text": "וֶרֶד"
+ },
+ {
+  "id": "word_ו2",
+  "kind": "word",
+  "text": "וִילוֹן"
+ },
+ {
+  "id": "word_ו3",
+  "kind": "word",
+  "text": "וָפֶל"
  },
  {
   "id": "let_כ",
@@ -190,6 +310,16 @@
   "text": "כּוֹכָב"
  },
  {
+  "id": "word_כ2",
+  "kind": "word",
+  "text": "כַּדּוּר"
+ },
+ {
+  "id": "word_כ3",
+  "kind": "word",
+  "text": "כֶּלֶב"
+ },
+ {
   "id": "let_פ",
   "kind": "word",
   "text": "פֵּא"
@@ -198,6 +328,16 @@
   "id": "word_פ",
   "kind": "word",
   "text": "פַּרְפַּר"
+ },
+ {
+  "id": "word_פ2",
+  "kind": "word",
+  "text": "פִּיל"
+ },
+ {
+  "id": "word_פ3",
+  "kind": "word",
+  "text": "פֶּרַח"
  },
  {
   "id": "let_ח",
@@ -210,6 +350,16 @@
   "text": "חָתוּל"
  },
  {
+  "id": "word_ח2",
+  "kind": "word",
+  "text": "חַלּוֹן"
+ },
+ {
+  "id": "word_ח3",
+  "kind": "word",
+  "text": "חֲמוֹר"
+ },
+ {
   "id": "let_ס",
   "kind": "word",
   "text": "סָמֶךְ"
@@ -218,6 +368,16 @@
   "id": "word_ס",
   "kind": "word",
   "text": "סִירָה"
+ },
+ {
+  "id": "word_ס2",
+  "kind": "word",
+  "text": "סוּס"
+ },
+ {
+  "id": "word_ס3",
+  "kind": "word",
+  "text": "סֵפֶר"
  },
  {
   "id": "let_ע",
@@ -230,6 +390,16 @@
   "text": "עֵץ"
  },
  {
+  "id": "word_ע2",
+  "kind": "word",
+  "text": "עַכְבָּר"
+ },
+ {
+  "id": "word_ע3",
+  "kind": "word",
+  "text": "עוּגָה"
+ },
+ {
   "id": "let_ק",
   "kind": "word",
   "text": "קוּף"
@@ -238,6 +408,16 @@
   "id": "word_ק",
   "kind": "word",
   "text": "קֶשֶׁת"
+ },
+ {
+  "id": "word_ק2",
+  "kind": "word",
+  "text": "קוֹף"
+ },
+ {
+  "id": "word_ק3",
+  "kind": "word",
+  "text": "קִפּוֹד"
  },
  {
   "id": "let_ז",
@@ -250,6 +430,16 @@
   "text": "זַיִת"
  },
  {
+  "id": "word_ז2",
+  "kind": "word",
+  "text": "זֶבְּרָה"
+ },
+ {
+  "id": "word_ז3",
+  "kind": "word",
+  "text": "זְנָב"
+ },
+ {
   "id": "let_ט",
   "kind": "word",
   "text": "טֵית"
@@ -258,6 +448,16 @@
   "id": "word_ט",
   "kind": "word",
   "text": "טַבַּעַת"
+ },
+ {
+  "id": "word_ט2",
+  "kind": "word",
+  "text": "טֶלֶפוֹן"
+ },
+ {
+  "id": "word_ט3",
+  "kind": "word",
+  "text": "טַוָּס"
  },
  {
   "id": "let_י",
@@ -270,6 +470,16 @@
   "text": "יָרֵחַ"
  },
  {
+  "id": "word_י2",
+  "kind": "word",
+  "text": "יֶלֶד"
+ },
+ {
+  "id": "word_י3",
+  "kind": "word",
+  "text": "יָד"
+ },
+ {
   "id": "let_צ",
   "kind": "word",
   "text": "צָדִי"
@@ -278,5 +488,15 @@
   "id": "word_צ",
   "kind": "word",
   "text": "צָב"
+ },
+ {
+  "id": "word_צ2",
+  "kind": "word",
+  "text": "צִפּוֹר"
+ },
+ {
+  "id": "word_צ3",
+  "kind": "word",
+  "text": "צְפַרְדֵּעַ"
  }
 ]

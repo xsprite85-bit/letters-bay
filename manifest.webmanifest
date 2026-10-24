@@ -1,0 +1,26 @@
+{
+ "name": "מפרץ האותיות",
+ "short_name": "מפרץ האותיות",
+ "lang": "he",
+ "dir": "rtl",
+ "start_url": "./",
+ "scope": "./",
+ "display": "fullscreen",
+ "orientation": "landscape",
+ "background_color": "#07222E",
+ "theme_color": "#0B3E66",
+ "icons": [
+  {
+   "src": "icon/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icon/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}

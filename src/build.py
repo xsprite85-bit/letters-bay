@@ -11,6 +11,8 @@ import re
 css=open('fonts/fonts.css').read()
 css=re.sub(r'url\(fonts/([\w-]+\.woff2)\)',lambda m:'url(data:font/woff2;base64,'+base64.b64encode(open('fonts/'+m.group(1),'rb').read()).decode()+')',css)
 s=s.replace('<link rel="stylesheet" href="fonts/fonts.css">','<style>'+css+'</style>',1)
+for n in ('192','180'):
+    s=s.replace('href="icon/icon-%s.png"'%n,'href="data:image/png;base64,'+base64.b64encode(open('icon/icon-%s.png'%n,'rb').read()).decode()+'"')
 s=s.replace('/*AUD*/{}',json.dumps(aud,ensure_ascii=False),1)
 open('letter-bay-game.html','w',encoding='utf8').write(s.replace(tag,'<script>'+lib+'</script>'))
 print('clips embedded:',len(aud),'size MB',round(os.path.getsize('letter-bay-game.html')/1e6,2))
