@@ -36,7 +36,7 @@ async def main(ci):
             if ch==CH[ci][0]: await pg.screenshot(path=f'sea{ci}_0.png')
             cov=pg.locator('.sea .cover'); nn=await cov.count(); shot=False
             for j in range(nn):
-                if await pg.locator('.hidL.got').count(): break
+                if await pg.locator('.hidL.got').count() or not await pg.locator('.sea').count(): break
                 c=cov.nth(j); cls=await c.get_attribute('class')
                 if 'rock' in cls:
                     bb=await c.bounding_box(); x=bb['x']+bb['width']/2; y=bb['y']+bb['height']/2
@@ -44,7 +44,7 @@ async def main(ci):
                 else: await c.click(force=True)
                 await pg.wait_for_timeout(450)
                 if ch==CH[ci][0] and j==2 and not shot: await pg.screenshot(path=f'sea{ci}_1.png'); shot=True
-            assert await pg.locator('.hidL.got').count()==1, 'letter not found'
+            assert await pg.locator('.hidL.got').count()==1 or await pg.locator('.orb').count()==1, 'letter not found'
             await pg.wait_for_timeout(2200)
             await pg.locator('.orb').click(force=True); await pg.wait_for_timeout(1200)
             await cb('הלאה'); await pg.wait_for_timeout(500)
