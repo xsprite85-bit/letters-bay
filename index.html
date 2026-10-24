@@ -2590,7 +2590,7 @@ fn mainFragment(
 (function(){
 var G=document.getElementById('game'),H=document.documentElement;
 var GL=window.GL={rot:false};
-function upd(){var r=innerHeight>innerWidth&&innerWidth<900;GL.rot=r;H.classList.toggle('rot',r)}
+function upd(){var touch=false;try{touch=matchMedia('(pointer:coarse)').matches}catch(e){}var r=innerHeight>innerWidth&&(innerWidth<900||touch);GL.rot=r;H.classList.toggle('rot',r)}
 upd();addEventListener('resize',upd);addEventListener('orientationchange',function(){setTimeout(upd,200)});document.addEventListener('fullscreenchange',upd);
 function loc(el){var a=el.getBoundingClientRect(),b=G.getBoundingClientRect();
   if(!GL.rot)return {left:a.left-b.left,top:a.top-b.top,width:a.width,height:a.height};
