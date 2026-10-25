@@ -6,6 +6,19 @@ const m=[];
 CHS.forEach((c,i)=>{if(c.intro)m.push({id:`ch${i+1}_intro`,kind:'story',text:c.intro});if(c.outro)m.push({id:`ch${i+1}_outro`,kind:'story',text:c.outro});});
 const seen=new Set();
 Object.values(LET).forEach(l=>{m.push({id:`let_${l.ch}`,kind:'word',text:l.name});[[l.word]].concat(l.more||[]).forEach((w,k)=>{if(!seen.has(w[0])){seen.add(w[0]);m.push({id:`word_${l.ch}${k?k+1:''}`,kind:'word',text:w[0]});}});});
+
+// chapter 1: opening story (4 steps, girl/boy), the bottle episode (per companion and girl/boy), and the word-step sentences for its letters
+{const P=[...src.matchAll(/\{t:'([^']+)',fx:'(storm|scatter|quiet)'/g)].map(x=>x[1]);
+ P.forEach((t,i)=>m.push({id:`ch1_story${i+1}`,kind:'story',text:t}));
+ const ask=src.match(/\{t:GN\('([^']+)','([^']+)'\)\+'\?'/);
+ if(ask){m.push({id:'ch1_story4f',kind:'story',text:ask[1]+'?'});m.push({id:'ch1_story4m',kind:'story',text:ask[2]+'?'});}
+ const ep=src.match(/GN\('אַתְּ וְ','אַתָּה וְ'\)\+n\[0\]\+' '\+n\[1\]\+'([^']+)'/);
+ const NAMES={t:['גַּלִּי','מְטַיְּלִים'],o:['תָּמִי','מְטַיְּלוֹת'],g:['נוּנִי','מְטַיְּלִים']};
+ if(ep)for(const c of 'tog')for(const g of 'fm'){const n=NAMES[c].slice();if(g==='m')n[1]='מְטַיְּלִים';m.push({id:`ch1_ep_${c}${g}`,kind:'story',text:(g==='f'?'אַתְּ וְ':'אַתָּה וְ')+n[0]+' '+n[1]+ep[1]});}
+ for(const ch of CHS[0].L){const l=LET[ch];[[l.word]].concat(l.more||[]).forEach((w,k)=>{
+   if(k===0){m.push({id:`ws_${ch}f`,kind:'story',text:'הַמִּלָּה '+w[0]+'. שָׁמַעְתְּ אֵיךְ הִיא מַתְחִילָה? הִנֵּה הָאוֹת '+ch+'.'});
+             m.push({id:`ws_${ch}m`,kind:'story',text:'הַמִּלָּה '+w[0]+'. שָׁמַעְתָּ אֵיךְ הִיא מַתְחִילָה? הִנֵּה הָאוֹת '+ch+'.'});}
+   else m.push({id:`wm_${ch}${k}`,kind:'story',text:'עוֹד מִלָּה: '+w[0]+'.'});});}}
 // companion lines: fixed sentences said through talk() (literal, or a GN girl/boy pair), plus the story-style continue prompts
 const VOX={t:'Umbriel',o:'Leda',g:'Puck'};
 const lines=new Set();
