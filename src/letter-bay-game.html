@@ -168,6 +168,21 @@ body{background:var(--bg);color:var(--fg);font-family:var(--f-body);margin:0;
 .pa-key span{display:inline-block;width:1.4cqw;height:1.4cqw;border:.2cqw solid var(--ink);border-radius:.4cqw;margin:0 1cqw 0 .4cqw;vertical-align:middle}
 .pa-set{display:flex;flex-wrap:wrap;gap:1cqw;margin:1cqw 0}.pa-set .btn{font-size:1.7cqw;padding:.5cqw 1.4cqw}
 .pa-note{opacity:.7;font-size:1.4cqw}
+.lvl{position:absolute;transform:translate(-50%,-50%);width:9cqw;height:9cqw;border-radius:50%;border:.5cqw solid var(--ink);background:radial-gradient(circle at 35% 30%,#fff,#ffe08a 60%,#f5b833);box-shadow:0 .6cqw 0 var(--ink);cursor:pointer;padding:0;z-index:4}
+.lvl .lv-c{position:absolute;inset:0;display:grid;place-items:center;font:700 4.4cqw var(--f-read);color:var(--ink)}
+.lvl .lv-i{position:absolute;right:-1.4cqw;top:-1.4cqw;width:3.8cqw;height:3.8cqw;background:#fff;border:.3cqw solid var(--ink);border-radius:50%;padding:.35cqw}.lvl .lv-i svg{width:100%;height:100%;display:block}
+.lvl .lv-s{position:absolute;left:50%;top:100%;transform:translateX(-50%);display:flex;gap:.15cqw;margin-top:.5cqw}
+.lvl .lv-s .off{opacity:.28;filter:grayscale(1)}
+.lvl.locked{background:#c8d3dc;filter:saturate(.3);opacity:.75;cursor:default}.lvl .lv-lock{position:absolute;left:50%;top:100%;transform:translateX(-50%);font-size:2cqw}
+.lvl.chestl{width:11cqw;height:11cqw;border-radius:2.4cqw}.lvl.chestl .lv-i{inset:1.2cqw;width:auto;height:auto;border:0;background:none}
+.lvl.next{animation:lvp 1.2s ease-in-out infinite}@keyframes lvp{50%{transform:translate(-50%,-50%) scale(1.12)}}
+.lm-title{position:absolute;top:2.6cqw;left:0;right:0;text-align:center;color:#fff;font:700 4cqw var(--f-display);text-shadow:0 .35cqw 0 var(--ink);pointer-events:none}
+.lm-count{position:absolute;top:9cqw;left:50%;transform:translateX(-50%);gap:1cqw;color:#fff;font-size:2.6cqw;text-shadow:0 .3cqw 0 var(--ink)}
+.lm-gate{position:absolute;bottom:11cqw;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.92);border:.3cqw solid var(--ink);border-radius:3cqw;padding:.5cqw 2cqw;font-size:2cqw;color:var(--ink);white-space:nowrap}
+.result{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);width:56cqw;background:rgba(255,255,255,.95);border:.5cqw solid var(--ink);border-radius:3.5cqw;padding:2.4cqw;text-align:center;color:var(--ink);box-shadow:0 1cqw 0 var(--ink)}
+.result .rs-t{font:700 4.4cqw var(--f-display)}.result .rs-stars{justify-content:center;gap:1.6cqw;margin:1.6cqw 0}
+.result .rs-star.off{opacity:.25;filter:grayscale(1)}.result .rs-star{animation:rsIn .55s cubic-bezier(.3,1.6,.5,1) both}@keyframes rsIn{from{transform:scale(0) rotate(-40deg)}to{transform:scale(1)}}
+.result .rs-m{font-size:2.4cqw;margin-bottom:1.6cqw}.result .rs-b{justify-content:center;gap:1.6cqw}
 .tr canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 .bar{position:absolute;bottom:-3.4cqw;left:10%;right:10%;height:1.8cqw;border-radius:2cqw;background:rgba(0,0,0,.3);border:.25cqw solid var(--ink);overflow:hidden}
 .bar b{display:block;height:100%;width:0;background:var(--gold);transition:width .15s}
@@ -2826,7 +2841,7 @@ var CHS=[
   outro:''}
 ];
 var ALLL='אבגדהוזחטיכלמנסעפצקרשת'.split('');
-function ORD(){return CHS[S.ch].L}
+function ORD(){return CHS[curCh()].L}
 function cntCh(){return ORD().filter(function(c){return S.letters.indexOf(c)>-1}).length}
 function gr(w){return w.match(/[א-ת][ְ-ׇ]*/g)||[]}
 function rnd(a,b){return a+Math.random()*(b-a)}
@@ -3246,7 +3261,7 @@ function pick(){
   });
 }
 
-function map(first){
+function map(first){levelMap(S.ch,first);return;
   if(overLimit()){restScreen();return}
   go(function(){
     mood('m-day');music('quest',.5+.05*cntCh()+.025*S.ch);HUD.hidden=false;hud();drawComp();
@@ -3340,6 +3355,103 @@ function parentArea(){
     SC.appendChild(btn('חזרה למשחק','gold sm',function(){title()},'position:absolute;bottom:2.4cqw;left:50%;transform:translateX(-50%)'));
   })}
 
+/* ---------- levels: every task is a level with 1-3 stars (accuracy only), replayable; islands open with a star total ---------- */
+var RUN=null,VIEW=null;
+function curCh(){return RUN?RUN.ch:(VIEW!=null?VIEW:S.ch)}
+function LVS(ch){var a=[];CHS[ch].L.forEach(function(c){a.push({id:c+'s',t:'search',c:c},{id:c+'b',t:'catch',c:c},{id:c+'w',t:'write',c:c})});a.push({id:'chest',t:'chest'});return a}
+function lvStars(ch,id){S.lvs=S.lvs||{};return S.lvs[ch+':'+id]||0}
+function chStars(ch){return LVS(ch).reduce(function(a,l){return a+lvStars(ch,l.id)},0)}
+function chNeed(ch){return LVS(ch).length*2}
+function lvOpen(ch,i){if(ch<S.ch)return true;var L=LVS(ch);return i===0||lvStars(ch,L[i-1].id)>0}
+function starsFor(t,e){if(t==='write')return e===0?3:e<=3?2:1;return e===0?3:e<=2?2:1}
+function playLevel(ch,i){
+  var L=LVS(ch)[i];RUN={ch:ch,i:i,id:L.id,t:L.t,e:0};
+  var idx=CHS[ch].L.indexOf(L.c);
+  if(L.t==='search')stepSearch(LET[L.c],idx);
+  else if(L.t==='catch')stepCatch(LET[L.c],idx);
+  else if(L.t==='write')stepTrace(LET[L.c],idx);
+  else chest(0);
+}
+function finishLevel(){
+  var r=RUN;if(!r)return;RUN=null;
+  var st=starsFor(r.t,r.e),prev=lvStars(r.ch,r.id),gain=Math.max(0,st-prev);
+  S.lvs[r.ch+':'+r.id]=Math.max(prev,st);S.stars+=gain;S.coins+=5*gain+(prev?0:5);
+  if(r.t==='chest')S.chestDone=true;
+  save();resultScreen(r,st,prev);
+}
+function starRow(n,size,anim){var h='';for(var i=0;i<3;i++)h+='<div class="'+(anim?'rs-star':'')+(i<n?' on':' off')+'" style="width:'+size+'cqw;animation-delay:'+(anim?(.5+i*.45):0)+'s">'+starSVG()+'</div>';return h}
+function resultScreen(r,st,prev){
+  go(function(){
+    mood('m-day');music(st===3?'triumph':'calm',.7);HUD.hidden=false;hud();place(14,74,14);
+    var box=el('','result pop-in');SC.appendChild(box);
+    var T={search:'מצאת את האות!',catch:'תפסת את כל הבועות!',write:'כתבת את האות!',chest:'פתחת את הארגז!'};
+    box.appendChild(el(T[r.t],'rs-t'));
+    box.appendChild(el(starRow(st,9,true),'row rs-stars'));
+    var msg=st===3?'מושלם!':st===2?GN('יפה מאוד! אפשר לנסות שוב בשביל 3 כוכבים.','יפה מאוד! אפשר לנסות שוב בשביל 3 כוכבים.'):GN('הצלחת! נסי שוב ותקבלי עוד כוכבים.','הצלחת! נסה שוב ותקבל עוד כוכבים.');
+    box.appendChild(el(msg+(st>prev&&prev?' שיא חדש!':''),'rs-m'));
+    for(var i=0;i<st;i++)(function(i){later(function(){snd('coin');var b=box.querySelectorAll('.rs-star')[i];if(b){var p=centerOf(b);burst(p.x,p.y,10,'star')}},500+i*450)})(i);
+    if(st===3)later(function(){cheer();snd('win')},1900);
+    var d=el('','row rs-b');
+    d.appendChild(btn('↻ שוב','sm',function(){playLevel(r.ch,r.i)}));
+    d.appendChild(btn('למפה','sm',function(){levelMap(r.ch)}));
+    var L=LVS(r.ch);
+    if(r.i+1<L.length&&lvOpen(r.ch,r.i+1))d.appendChild(btn('הבא ◀','gold sm',function(){playLevel(r.ch,r.i+1)}));
+    else d.appendChild(btn('הבא ◀','gold sm',function(){levelMap(r.ch)}));
+    box.appendChild(d);
+  });
+}
+/* small glyphs for the level type */
+function lvIcon(t){
+  if(t==='search')return '<svg viewBox="0 0 40 40"><circle cx="17" cy="17" r="10" fill="#BFF3FF" stroke="#12395A" stroke-width="4"/><path d="M25 25 L35 35" stroke="#12395A" stroke-width="6" stroke-linecap="round"/></svg>';
+  if(t==='catch')return '<svg viewBox="0 0 40 40"><circle cx="15" cy="22" r="11" fill="#d9f3ff" stroke="#12395A" stroke-width="3.5"/><circle cx="30" cy="11" r="6" fill="#d9f3ff" stroke="#12395A" stroke-width="3"/><path d="M10 18 Q12 14 16 13" stroke="#fff" stroke-width="3" fill="none"/></svg>';
+  if(t==='write')return '<svg viewBox="0 0 40 40"><path d="M8 32 L10 24 L28 6 L34 12 L16 30z" fill="#FFC83D" stroke="#12395A" stroke-width="3.5" stroke-linejoin="round"/><path d="M8 32 L10 24 L16 30z" fill="#F2D2A9" stroke="#12395A" stroke-width="3"/></svg>';
+  return '<svg viewBox="0 0 40 40"><rect x="5" y="16" width="30" height="18" rx="3" fill="#C98B4B" stroke="#12395A" stroke-width="3.5"/><path d="M5 16 Q5 6 20 6 Q35 6 35 16z" fill="#D9A15E" stroke="#12395A" stroke-width="3.5"/><rect x="16" y="14" width="8" height="8" rx="2" fill="#FFC83D" stroke="#12395A" stroke-width="2.5"/></svg>';
+}
+function levelMap(ch,first){
+  if(ch==null)ch=S.ch;
+  if(ch===S.ch&&overLimit()){restScreen();return}
+  VIEW=ch;RUN=null;
+  go(function(){
+    mood('m-day');music('quest',.45+.06*ch);HUD.hidden=false;hud();
+    var L=LVS(ch),have=chStars(ch),need=chNeed(ch),n=L.length;
+    SC.appendChild(el('<svg viewBox="0 0 1000 625" preserveAspectRatio="none" style="width:100%;height:100%"><path d="M0 470 Q250 430 500 470 T1000 460 V625 H0z" fill="#F2D59A" stroke="#12395A" stroke-width="6"/></svg>','fill'));
+    SC.appendChild(el('<b>אי '+(ch+1)+' · '+CHS[ch].t+'</b>','lm-title'));
+    SC.appendChild(el('<div style="width:3.6cqw">'+starSVG()+'</div><b>'+have+' / '+(L.length*3)+'</b>','row lm-count'));
+    /* path of level circles, right to left with a wave */
+    var pts=[];for(var i=0;i<n;i++){var u=n===1?.5:i/(n-1);pts.push([88-u*76,46+Math.sin(u*Math.PI*2.2)*14])}
+    var path='M'+pts.map(function(p){return (p[0]*10)+' '+(p[1]*6.25)}).join(' L');
+    SC.appendChild(el('<svg viewBox="0 0 1000 625" preserveAspectRatio="none" style="width:100%;height:100%"><path d="'+path+'" fill="none" stroke="#fff" stroke-width="7" stroke-dasharray="2 18" stroke-linecap="round" opacity=".85"/></svg>','fill'));
+    var nextI=-1;L.forEach(function(l,i){if(nextI<0&&lvOpen(ch,i)&&!lvStars(ch,l.id))nextI=i});
+    L.forEach(function(l,i){
+      var open=lvOpen(ch,i),st=lvStars(ch,l.id),p=pts[i];
+      var b=document.createElement('button');b.type='button';b.className='lvl'+(open?'':' locked')+(i===nextI?' next':'')+(l.t==='chest'?' chestl':'');
+      b.style.cssText='left:'+p[0]+'%;top:'+p[1]+'%';
+      b.setAttribute('aria-label',(l.t==='chest'?'תיבת אוצר':'שלב '+(i+1)+' · '+l.c));
+      b.innerHTML='<span class="lv-c">'+(l.t==='chest'?'':l.c)+'</span><span class="lv-i">'+lvIcon(l.t)+'</span>'+(open?'<span class="lv-s">'+starRow(st,2.2)+'</span>':'<span class="lv-lock">🔒</span>');
+      if(open)b.addEventListener('click',function(){snd('tap');playLevel(ch,i)});
+      else b.addEventListener('click',function(){snd('soft');talk('קודם צריך לסיים את השלב הקודם.',{x:30,dy:16})});
+      SC.appendChild(b);
+    });
+    if(nextI>=0){var q=pts[nextI];place(q[0],q[1]-13,9)}else place(50,30,11);
+    var dock=el('','dock');
+    dock.appendChild(btn('חנות','sm',function(){shop('map')}));
+    if(ch>0)dock.appendChild(btn('▶ האי הקודם','sm',function(){levelMap(ch-1)}));
+    var chestDone=lvStars(ch,'chest')>0;
+    if(ch<S.ch)dock.appendChild(btn('האי הבא ◀','gold sm',function(){levelMap(ch+1)}));
+    else if(chestDone&&have>=need)dock.appendChild(btn(ch>=CHS.length-1?'לסיום ההרפתקה ◀':'לאי הבא ◀','gold sm',function(){S.chestDone=true;reward()}));
+    SC.appendChild(dock);
+    var gate=el('','lm-gate');
+    if(ch===S.ch){
+      if(have>=need)gate.innerHTML=chestDone?'יש מספיק כוכבים! אפשר להפליג לאי הבא.':'יש מספיק כוכבים. נשאר לפתוח את תיבת האוצר!';
+      else gate.innerHTML='כדי להפליג לאי הבא צריך <b>'+need+'</b> כוכבים · חסרים עוד <b>'+(need-have)+'</b>';
+      SC.appendChild(gate)}
+    later(function(){
+      if(first&&ch===0&&!have)talk(GN('כל עיגול הוא משימה. לחצי על הראשון ונתחיל!','כל עיגול הוא משימה. לחץ על הראשון ונתחיל!'),{x:30,dy:15});
+      else if(ch===S.ch&&chestDone&&have<need)talk(GN('אפשר לשחק שוב בשלבים ולאסוף עוד כוכבים!','אפשר לשחק שוב בשלבים ולאסוף עוד כוכבים!'),{x:30,dy:15});
+    },700);
+  });
+}
+
 function lesson(idx){
   var L=LET[ORD()[idx]];
   stepSearch(L,idx);
@@ -3375,7 +3487,7 @@ function stepSearch(L,idx){
       wrap.appendChild(ob);sp.el=ob;sp.hid=hid;sp.wrap=wrap;
       function reveal(){if(sp.open)return;sp.open=true;opened++;snd('whoosh');wrap.classList.add('shown');ob.style.pointerEvents='none';
         if(hid===L.ch){found=true;win(sp)}
-        else if(hid){snd('soft');talk(GN('זו לא '+L.ch+', זו '+hid+'. נמשיך לחפש!','זו לא '+L.ch+', זו '+hid+'. נמשיך לחפש!'),{x:22,dy:14})}
+        else if(hid){snd('soft');if(RUN)RUN.e++;talk(GN('זו לא '+L.ch+', זו '+hid+'. נמשיך לחפש!','זו לא '+L.ch+', זו '+hid+'. נמשיך לחפש!'),{x:22,dy:14})}
         else if(opened===2)talk('כאן אין כלום... אולי במקום אחר?',{x:22,dy:14})}
       if(sp.k==='rock'){/* drag the rock aside */
         var down=null;
@@ -3393,7 +3505,7 @@ function stepSearch(L,idx){
       later(function(){stepListen(L,idx)},1600)}
     later(function(){talk(GN('האות '+L.ch+' מתחבאת אי שם בים! חפשי מתחת לאבנים, בין האצות ובתוך הצדפים.','האות '+L.ch+' מתחבאת אי שם בים! חפש מתחת לאבנים, בין האצות ובתוך הצדפים.'),{x:22,dy:14,ms:6000})},500);
     /* hints after 20 s and 35 s */
-    function hint(level){if(found||gen!==S.gen)return;var sp=spots[target];
+    function hint(level){if(found||gen!==S.gen)return;var sp=spots[target];if(RUN)RUN.e++;
       talk('אולי '+NAMEK[sp.k]+'...?',{x:22,dy:14});sp.el.classList.remove('wig');void sp.el.offsetWidth;sp.el.classList.add('wig');if(level>1)sp.el.classList.add('glowc')}
     later(function(){hint(1)},20000);later(function(){hint(2)},35000);
   });
@@ -3415,7 +3527,7 @@ function stepListen(L,idx){
     });
     SC.appendChild(o);
     next=btn('הלאה ←','gold','function',"position:absolute;bottom:4cqw;left:50%;transform:translateX(-50%)");
-    next.hidden=true;next.onclick=null;next.addEventListener('click',function(){stepCatch(L,idx)});
+    next.hidden=true;next.onclick=null;next.addEventListener('click',function(){if(RUN&&RUN.t==='search')finishLevel();else stepCatch(L,idx)});
     SC.appendChild(next);
     later(function(){talk(GN('שלום! הנה אות שאבדה בסערה. לחצי עליה ותשמעי איך קוראים לה.','שלום! הנה אות שאבדה בסערה. לחץ עליה ותשמע איך קוראים לה.'),{x:32,dy:17})},500);
   });
@@ -3437,8 +3549,8 @@ function stepCatch(L,idx){
       b.addEventListener('pointerdown',function(e){
         if(b.dataset.x)return;
         if(isT){b.dataset.x=1;snd('pop');var p=centerOf(b);burst(p.x,p.y,12,'dot');b.remove();got++;cr();say(L.name,.75);cheer();
-          if(got>=need){snd('chime');later(function(){talk('כל הכבוד! תפסת את כולן!',{x:32,dy:17});later(function(){stepTrace(L,idx)},700)},400);gen=-1;area.innerHTML=''}}
-        else{snd('soft');stt(L.ch).b++;b.classList.remove('wob');void b.offsetWidth;b.classList.add('wob');say('זו לא '+L.ch+'. נמשיך לחפש',.8)}
+          if(got>=need){snd('chime');later(function(){talk('כל הכבוד! תפסת את כולן!',{x:32,dy:17});later(function(){if(RUN&&RUN.t==='catch')finishLevel();else stepTrace(L,idx)},700)},400);gen=-1;area.innerHTML=''}}
+        else{snd('soft');stt(L.ch).b++;if(RUN)RUN.e++;b.classList.remove('wob');void b.offsetWidth;b.classList.add('wob');say('זו לא '+L.ch+'. נמשיך לחפש',.8)}
       });
       area.appendChild(b);later(spawn,rnd(800,1250));
     }
@@ -3559,7 +3671,7 @@ function stepTrace(L,idx){
     var LINES={guide:GN('בואי נכתוב את '+L.ch+'! קודם תסתכלי, ואז תכתבי עם האצבע לפי המספרים.','בוא נכתוב את '+L.ch+'! קודם תסתכל, ואז תכתוב עם האצבע לפי המספרים.'),
       dots:GN('עכשיו רק נקודות. כתבי את '+L.ch+' שוב.','עכשיו רק נקודות. כתוב את '+L.ch+' שוב.'),
       memory:GN('ועכשיו בלי עזרה! כתבי '+L.ch+' מהזיכרון.','ועכשיו בלי עזרה! כתוב '+L.ch+' מהזיכרון.')};
-    function next(){pr();if(k>=plan.length){weakAdd(L.ch,misses>3?2:misses>0?1:0);var sx=stt(L.ch);sx.w+=misses;sx.last=Date.now();talk(GN('כתבת את ','כתבת את ')+L.ch+' לבד!',{x:30,dy:17});cheer();later(function(){stepWord(L,idx)},1300);return}
+    function next(){pr();if(k>=plan.length){weakAdd(L.ch,misses>3?2:misses>0?1:0);var sx=stt(L.ch);sx.w+=misses;sx.last=Date.now();if(RUN)RUN.e=misses;talk(GN('כתבת את ','כתבת את ')+L.ch+' לבד!',{x:30,dy:17});cheer();later(function(){stepWord(L,idx)},1300);return}
       area.innerHTML='';var m=plan[k];if(k===0||plan[k-1]!==m)talk(LINES[m],{x:30,dy:17,ms:5200});
       writeBoard(area,L.ch,m,function(ms){misses+=ms;k++;next()})}
     next();
@@ -3611,9 +3723,9 @@ function collect(L,from){
   var f=document.createElement('div');f.className='part big';f.textContent=L.ch;f.style.cssText='left:'+a.x+'px;top:'+a.y+'px;font-size:9cqw;transform:translate(-50%,-50%);color:var(--gold)';G.appendChild(f);
   var tx=G.clientWidth*.5-a.x,ty=G.clientHeight*.15-a.y;snd('whoosh');
   f.animate([{transform:'translate(-50%,-50%) scale(1)'},{transform:'translate(calc(-50% + '+tx+'px),calc(-50% + '+ty+'px)) scale(.5)'}],{duration:900,easing:'ease-in'});
-  S.letters.push(L.ch);
-  later(function(){f.remove();S.coins+=10;S.stars+=1;hud();bump('#pCoins');bump('#pStars');snd('coin');burst(G.clientWidth*.5,G.clientHeight*.15,14,'coin');cheer();
-    later(function(){map(false)},450)},900);
+  var isNew=S.letters.indexOf(L.ch)<0;if(isNew)S.letters.push(L.ch);
+  later(function(){f.remove();if(isNew)S.coins+=10;hud();bump('#pCoins');bump('#pStars');snd('coin');burst(G.clientWidth*.5,G.clientHeight*.15,14,'coin');cheer();
+    later(function(){if(RUN&&RUN.t==='write')finishLevel();else map(false)},450)},900);
 }
 
 /* ---- chest ---- */
@@ -3651,10 +3763,10 @@ function chest(r){
       c.classList.add('win');snd('win');cheer();cw.classList.add('open');
       var earned=Math.max(1,3-Math.min(2,used+wrong>0?(used>=3?2:used+(wrong?1:0)):0));
       var p=centerOf(cw);burst(p.x,p.y,34,'coin');burst(p.x,p.y,16,'star');
-      S.coins+=20;S.stars+=earned;hud();bump('#pCoins');bump('#pStars');
+      if(RUN)RUN.e+=used+wrong;else{S.coins+=20;S.stars+=earned}hud();bump('#pCoins');bump('#pStars');
       var st='';for(var i=0;i<3;i++)st+='<div style="width:7cqw;opacity:'+(i<earned?1:.25)+'" class="pop-in">'+starSVG()+'</div>';
       later(function(){var s=el(st,'row','position:absolute;left:80%;top:30%;transform:translateX(-50%);flex-direction:column;gap:1cqw');SC.appendChild(s);for(var i=0;i<earned;i++)(function(i){later(function(){snd('coin')},i*250)})(i);talk('פתחת אותה! קראת '+word+'!',{x:30,dy:17})},700);
-      later(function(){if(r+1<ROUNDS().length)chest(r+1);else{S.chestDone=true;reward()}},3800);
+      later(function(){if(r+1<ROUNDS().length)chest(r+1);else if(RUN)finishLevel();else{S.chestDone=true;reward()}},3800);
     }
   });
 }
@@ -3687,11 +3799,11 @@ function shop(from){
         S.coins-=it[2];S.owned.push(it[0]);S.hat=it[0];drawComp();hud();bump('#pCoins');snd('coin');cheer();var p=centerOf(COMP);burst(p.x,p.y,22,'star');talk('איזה יופי! זה בדיוק בשבילי.',{x:30,dy:16})});
       b.style.marginTop='1cqw';b.style.fontSize='2cqw';d.appendChild(b);g.appendChild(d)});
     SC.appendChild(g);
-    SC.appendChild(el('','dock')).appendChild(btn(from==='map'?'חזרה למפה':'להמשך','sm',function(){if(from==='map')map(false);else map(false)}));
+    SC.appendChild(el('','dock')).appendChild(btn(from==='map'?'חזרה למפה':'להמשך','sm',function(){if(from==='map')map(false);else teaser()}));
     later(function(){talk('כל המטבעות ששווים כאן נאספו מהאותיות שמצאת!',{x:30,dy:16})},400);
   });
 }
-function nextChapter(){S.ch++;S.chestDone=false;episodeCh(S.ch)}
+function nextChapter(){VIEW=null;S.ch++;S.chestDone=false;episodeCh(S.ch)}
 function teaser(){
   if(S.ch>=CHS.length-1){finale();return}
   go(function(){
@@ -3738,7 +3850,7 @@ function chapterPicker(){
     mood('m-day');HUD.hidden=true;hideComp();
     SC.appendChild(el('לאיזה פרק לקפוץ?','ttl','position:absolute;top:4cqw;left:0;right:0;font-size:5cqw'));
     var g=el('','','position:absolute;left:6cqw;right:6cqw;top:17cqw;display:grid;grid-template-columns:repeat(4,1fr);gap:2cqw');
-    CHS.forEach(function(c,i){var b=btn((i+1)+' · '+c.t.replace(/[\u0591-\u05C7]/g,'')+'  ('+c.L.join(' ')+')','sm'+(i?'':' gold'),function(){initAudio();S=fresh();S.ch=i;CHS.slice(0,i).forEach(function(x){S.letters=S.letters.concat(x.L)});syncTg();drawComp();episodeCh(i)},'font-size:2.1cqw;padding:1.4cqw .8cqw;line-height:1.3;white-space:normal');g.appendChild(b)});
+    CHS.forEach(function(c,i){var b=btn((i+1)+' · '+c.t.replace(/[\u0591-\u05C7]/g,'')+'  ('+c.L.join(' ')+')','sm'+(i?'':' gold'),function(){initAudio();S=fresh();S.ch=i;S.lvs={};CHS.slice(0,i).forEach(function(x,j){S.letters=S.letters.concat(x.L);LVS(j).forEach(function(l){S.lvs[j+':'+l.id]=2})});syncTg();drawComp();episodeCh(i)},'font-size:2.1cqw;padding:1.4cqw .8cqw;line-height:1.3;white-space:normal');g.appendChild(b)});
     SC.appendChild(g);
     SC.appendChild(btn('חזרה','sm',function(){title()},'position:absolute;bottom:4cqw;left:50%;transform:translateX(-50%)'));
   });
