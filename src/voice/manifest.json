@@ -629,6 +629,34 @@
   "text": "שיחקנו יפה היום! נמשיך מחר, אני אשמור לך את המקום."
  },
  {
+  "id": "ct_juwiew",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "קודם צריך לסיים את השלב הקודם."
+ },
+ {
+  "id": "ct_1hzejm8",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "כל עיגול הוא משימה. לחצי על הראשון ונתחיל!"
+ },
+ {
+  "id": "ct_11y4gay",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "כל עיגול הוא משימה. לחץ על הראשון ונתחיל!"
+ },
+ {
+  "id": "ct_e43202",
+  "kind": "comp",
+  "comp": "t",
+  "voice": "Umbriel",
+  "text": "אפשר לשחק שוב בשלבים ולאסוף עוד כוכבים!"
+ },
+ {
   "id": "ct_1bxc2uu",
   "kind": "comp",
   "comp": "t",
@@ -753,20 +781,6 @@
   "comp": "t",
   "voice": "Umbriel",
   "text": "הצלחנו! עכשיו אפשר להתקשט בחנות."
- },
- {
-  "id": "ct_r7hzbi",
-  "kind": "comp",
-  "comp": "t",
-  "voice": "Umbriel",
-  "text": "איזה יופי! זה בדיוק בשבילי."
- },
- {
-  "id": "ct_s4vvgl",
-  "kind": "comp",
-  "comp": "t",
-  "voice": "Umbriel",
-  "text": "כל המטבעות ששווים כאן נאספו מהאותיות שמצאת!"
  },
  {
   "id": "ct_1jkq4b3",
@@ -909,6 +923,34 @@
   "text": "שיחקנו יפה היום! נמשיך מחר, אני אשמור לך את המקום."
  },
  {
+  "id": "co_juwiew",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "קודם צריך לסיים את השלב הקודם."
+ },
+ {
+  "id": "co_1hzejm8",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "כל עיגול הוא משימה. לחצי על הראשון ונתחיל!"
+ },
+ {
+  "id": "co_11y4gay",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "כל עיגול הוא משימה. לחץ על הראשון ונתחיל!"
+ },
+ {
+  "id": "co_e43202",
+  "kind": "comp",
+  "comp": "o",
+  "voice": "Leda",
+  "text": "אפשר לשחק שוב בשלבים ולאסוף עוד כוכבים!"
+ },
+ {
   "id": "co_1bxc2uu",
   "kind": "comp",
   "comp": "o",
@@ -1033,20 +1075,6 @@
   "comp": "o",
   "voice": "Leda",
   "text": "הצלחנו! עכשיו אפשר להתקשט בחנות."
- },
- {
-  "id": "co_r7hzbi",
-  "kind": "comp",
-  "comp": "o",
-  "voice": "Leda",
-  "text": "איזה יופי! זה בדיוק בשבילי."
- },
- {
-  "id": "co_s4vvgl",
-  "kind": "comp",
-  "comp": "o",
-  "voice": "Leda",
-  "text": "כל המטבעות ששווים כאן נאספו מהאותיות שמצאת!"
  },
  {
   "id": "co_1jkq4b3",
@@ -1189,6 +1217,34 @@
   "text": "שיחקנו יפה היום! נמשיך מחר, אני אשמור לך את המקום."
  },
  {
+  "id": "cg_juwiew",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "קודם צריך לסיים את השלב הקודם."
+ },
+ {
+  "id": "cg_1hzejm8",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "כל עיגול הוא משימה. לחצי על הראשון ונתחיל!"
+ },
+ {
+  "id": "cg_11y4gay",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "כל עיגול הוא משימה. לחץ על הראשון ונתחיל!"
+ },
+ {
+  "id": "cg_e43202",
+  "kind": "comp",
+  "comp": "g",
+  "voice": "Puck",
+  "text": "אפשר לשחק שוב בשלבים ולאסוף עוד כוכבים!"
+ },
+ {
   "id": "cg_1bxc2uu",
   "kind": "comp",
   "comp": "g",
@@ -1313,20 +1369,6 @@
   "comp": "g",
   "voice": "Puck",
   "text": "הצלחנו! עכשיו אפשר להתקשט בחנות."
- },
- {
-  "id": "cg_r7hzbi",
-  "kind": "comp",
-  "comp": "g",
-  "voice": "Puck",
-  "text": "איזה יופי! זה בדיוק בשבילי."
- },
- {
-  "id": "cg_s4vvgl",
-  "kind": "comp",
-  "comp": "g",
-  "voice": "Puck",
-  "text": "כל המטבעות ששווים כאן נאספו מהאותיות שמצאת!"
  },
  {
   "id": "cg_1jkq4b3",
