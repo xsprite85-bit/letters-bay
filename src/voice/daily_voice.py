@@ -159,6 +159,7 @@ def main():
             nxt = T[b + 1][0] if b + 1 < len(T) else dur
             s = max(0.0, T[a][0] - .18); e = min(dur, max(T[b][1] + .05, min(T[b][1] + .4, nxt - .05)))
             okfrac = sum(ex[a:b + 1]) / n
+            if e - s < .1: continue  # the reading stopped before this item: leave it pending for the next run
             if okfrac < .6: report['weak'].append({'id': it['id'], 'text': it['text'], 'matched': round(okfrac, 2)})
             cut(raw, s, e, os.path.join(CLIPS, it['id'] + '.mp3'))
             w = [[round(float(x - s), 2), round(float(y - s), 2)] for x, y in T[a:b + 1]]
