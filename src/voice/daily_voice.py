@@ -85,21 +85,45 @@ def cut(wav, a, b, out):
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', f'{a:.3f}', '-to', f'{b:.3f}', '-i', wav, '-ac', '1', '-ar', '24000', '-b:a', '48k', out], check=True)
 
 def batches(items):
+    # the free quota allows only a few requests a day, so each request reads a long list
     words = [it for it in items if it['kind'] == 'word']; story = [it for it in items if it['kind'] == 'story']
+    syl = [it for it in items if it['kind'] == 'syl']
     out = []
-    for i in range(0, len(words), 30): out.append(words[i:i + 30])
+    for i in range(0, len(words), 60): out.append(words[i:i + 60])
     cur, n = [], 0
     for it in story:
-        if cur and n + len(it['text']) > 650: out.append(cur); cur, n = [], 0
+        if cur and n + len(it['text']) > 1300: out.append(cur); cur, n = [], 0
         cur.append(it); n += len(it['text'])
     if cur: out.append(cur)
-    # companion lines last (narration first), one batch per voice of up to 20 lines
+    for i in range(0, len(syl), 50): out.append(syl[i:i + 50])
+    # companion lines after the narration: batches of up to 50 lines, taking turns between the three voices
+    # so every companion moves forward each day (the manifest lists early islands first)
     comp = {}
     for it in items:
         if it['kind'] == 'comp': comp.setdefault(it['voice'], []).append(it)
-    for v, lst in comp.items():
-        for i in range(0, len(lst), 20): out.append(lst[i:i + 20])
+    per = {v: [lst[i:i + 50] for i in range(0, len(lst), 50)] for v, lst in comp.items()}
+    for k in range(max([len(x) for x in per.values()] or [0])):
+        for v in per:
+            if k < len(per[v]): out.append(per[v][k])
     return out
+
+def speech_runs(wav, n):
+    """syllables are too short for the recognizer: cut them on the pauses instead. Returns n (start,end) or None"""
+    a = load16k(wav); fr = 320; k = len(a) // fr
+    if k < 3: return None
+    e = np.sqrt((a[:k * fr].reshape(k, fr) ** 2).mean(1)); on = e > max(.012, e.max() * .06)
+    runs, i = [], 0
+    while i < k:
+        if on[i]:
+            j = i
+            while j < k and on[j]: j += 1
+            if runs and (i - runs[-1][1]) * .02 < .2: runs[-1][1] = j
+            else: runs.append([i, j])
+            i = j
+        else: i += 1
+    runs = [r for r in runs if (r[1] - r[0]) * .02 >= .06]
+    if len(runs) != n: return None
+    return [(r[0] * .02, r[1] * .02) for r in runs]
 
 def main():
     maxreq = int(sys.argv[sys.argv.index('--max-requests') + 1]) if '--max-requests' in sys.argv else 99
@@ -122,7 +146,13 @@ def main():
             dur = tts(text, raw, group[0].get('voice', VOICE)); report['requests'] += 1
         except Quota as q:
             report['stopped'] = 'daily quota: ' + str(q)[:120]; break
-        toks = text.split(); T, ex = token_times(raw, toks)
+        toks = text.split()
+        sr = speech_runs(raw, len(group)) if group[0]['kind'] == 'syl' else None
+        if sr:  # one token per item: timings straight from the pauses
+            T = [[a, b] for a, b in sr]; ex = [True] * len(T)
+        else:
+            T, ex = token_times(raw, toks)
+            if group[0]['kind'] == 'syl': ex = [False] * len(T)
         k = 0
         for gi, it in enumerate(group):
             n = len(parts[gi].split()); a, b = k, k + n - 1; k += n

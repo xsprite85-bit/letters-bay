@@ -685,7 +685,10 @@ function narrate(box,text,opts){
   later(function(){if(tok!==narTok)return;pos(0,0);fish.style.opacity='1';startPhrases()},30);
   return function stop(){narTok++;tms.forEach(clearTimeout);try{speechSynthesis.cancel()}catch(e){}if(aud){try{aud.pause()}catch(e){}}}
 }
-function say(t,rate,who){duck(2200);
+/* the spoken form of a line: the child's name is left out (the bubble still shows it) and a lone letter is read by its name, so every line can have a recorded clip */
+function spk(t){if(PN){t=t.split(', '+PN).join('').split(' '+PN).join('')}
+  if(/\s/.test(t))t=t.replace(/(^|[\s:,])([א-ת])(?=[\s.,!?:]|$)/g,function(m,a,c){return a+(LET[c]?LET[c].name:c)});return t}
+function say(t,rate,who){duck(2200);t=spk(t);
   var bank=who?(AUDC[who]||{}):AUD;
   if(S.voice&&bank[t]){try{speechSynthesis.cancel()}catch(e){}try{if(NAR.say)NAR.say.pause();NAR.say=new Audio(bank[t].src);NAR.say.play().catch(function(){})}catch(e){}return}
   if(!S.voice||!('speechSynthesis' in window))return;
@@ -1185,7 +1188,7 @@ function shop(from,tab){
           else if(it[1]==='pet'){S.pet=on?null:it[0];drawPet()}
           else{S.decoOff=S.decoOff||[];var k=S.decoOff.indexOf(it[0]);if(on)S.decoOff.push(it[0]);else if(k>-1)S.decoOff.splice(k,1)}
           snd('chime');save();shop(from,tab);return}
-        if(S.coins<it[3]){snd('soft');talk('צריך עוד '+(it[3]-S.coins)+' מטבעות. אפשר לשחק שוב בשלבים ולאסוף!',{x:24,dy:16});return}
+        if(S.coins<it[3]){snd('soft');talk('צריך עוד '+(it[3]-S.coins)+' מטבעות. אפשר לשחק שוב בשלבים ולאסוף!',{x:24,dy:16,say:'צריך עוד מטבעות. אפשר לשחק שוב בשלבים ולאסוף!'});return}
         S.coins-=it[3];S.owned.push(it[0]);
         if(it[1]==='hat'){S.hat=it[0];drawComp()}else if(it[1]==='pet'){S.pet=it[0];drawPet()}
         hud();bump('#pCoins');snd('coin');cheer();save();var p=centerOf(d);burst(p.x,p.y,22,'star');
@@ -1244,7 +1247,7 @@ function stepSearch(L,idx){
       wrap.appendChild(ob);sp.el=ob;sp.hid=hid;sp.wrap=wrap;
       function reveal(){if(sp.open)return;sp.open=true;opened++;snd('whoosh');wrap.classList.add('shown');ob.style.pointerEvents='none';
         if(hid===L.ch){found=true;win(sp)}
-        else if(hid){snd('soft');if(RUN)RUN.e++;talk(GN('זו לא '+L.ch+', זו '+hid+'. נמשיך לחפש!','זו לא '+L.ch+', זו '+hid+'. נמשיך לחפש!'),{x:22,dy:14})}
+        else if(hid){snd('soft');if(RUN)RUN.e++;talk('זו לא '+L.ch+', זו '+hid+'. נמשיך לחפש!',{x:22,dy:14,say:'זו לא '+L.ch+'. נמשיך לחפש!'})}
         else if(opened===2)talk('כאן אין כלום... אולי במקום אחר?',{x:22,dy:14})}
       if(sp.k==='rock'){/* drag the rock aside */
         var down=null;
