@@ -73,6 +73,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--f-body);margin:0;
 .pill.bump{animation:bump .5s}
 @keyframes bump{40%{transform:scale(1.25)}}
 .tg{font:inherit;width:5cqw;height:5cqw;border-radius:50%;border:.3cqw solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;font-size:2.6cqw;display:grid;place-items:center;padding:0}
+#fsG{position:absolute;right:1.2cqw;bottom:1.2cqw;z-index:60;width:4.4cqw;height:4.4cqw;border-radius:1.2cqw;border:.3cqw solid var(--ink);background:rgba(255,255,255,.82);cursor:pointer;padding:.7cqw;display:grid;place-items:center;opacity:.8}#fsG:hover{opacity:1}#fsG svg{width:100%;height:100%}
 .tg[aria-pressed="false"]{opacity:.55;background:#ffd9d9;position:relative}.tg[aria-pressed="false"]::after{content:"";position:absolute;left:12%;right:12%;top:50%;height:.45cqw;background:#e0263a;transform:rotate(-40deg);border-radius:1cqw}
 .row{display:flex;gap:1.2cqw;align-items:center}
 .btn{font-family:var(--f-display);font-size:3cqw;background:var(--acc);color:#fff;border:.35cqw solid var(--ink);border-radius:5cqw;padding:1cqw 4cqw;cursor:pointer;box-shadow:0 .7cqw 0 var(--ink);transition:transform .1s,box-shadow .1s;line-height:1.1}
@@ -261,6 +262,7 @@ html.rot #game{--w:min(100vh,160vw);position:fixed;width:var(--w);height:calc(va
       <button class="tg" id="tgVoice" type="button" aria-pressed="true" aria-label="דיבור" title="דיבור">🗣</button>
     </div>
   </div>
+  <button id="fsG" type="button" aria-label="מסך מלא" title="מסך מלא"></button>
   <div id="flash"></div>
   <div id="rot" role="alert"><svg viewBox="0 0 60 100"><rect x="8" y="4" width="44" height="92" rx="9" fill="none" stroke="#fff" stroke-width="5"/><circle cx="30" cy="84" r="4" fill="#fff"/></svg><div>סובבי את המכשיר לרוחב</div></div>
 </div>
@@ -3951,6 +3953,17 @@ $('#tgVoice').addEventListener('click',function(){S.voice=!S.voice;if(!S.voice){
 
 function goFull(){try{var R=document.documentElement,e=R.requestFullscreen?R.requestFullscreen({navigationUI:'hide'}):R.webkitRequestFullscreen&&R.webkitRequestFullscreen();var lk=function(){try{screen.orientation.lock('landscape').catch(function(){})}catch(x){}};if(e&&e.then)e.then(lk).catch(function(){});else lk()}catch(x){}}
 $('#fsBtn').addEventListener('click',function(){if(document.fullscreenElement){document.exitFullscreen()}else goFull()});
+/* full screen: automatic on the first tap (browsers allow it only after a tap), plus a corner button */
+var FS_OFF=false;
+function isFull(){return !!(document.fullscreenElement||document.webkitFullscreenElement)||!!(window.matchMedia&&matchMedia('(display-mode: fullscreen)').matches)}
+function fsIcon(){var on=isFull(),b=$('#fsG');
+  b.innerHTML=on?'<svg viewBox="0 0 24 24" fill="none" stroke="#12395A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="#12395A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/></svg>';
+  b.setAttribute('aria-label',on?'יציאה ממסך מלא':'מסך מלא');b.title=b.getAttribute('aria-label')}
+$('#fsG').addEventListener('click',function(e){e.stopPropagation();if(isFull()){FS_OFF=true;try{(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(x){}}else{FS_OFF=false;goFull()}});
+function autoFull(e){if(FS_OFF||isFull()||(e.target&&e.target.closest&&e.target.closest('#fsG')))return;goFull()}
+document.addEventListener('pointerup',function(e){if(e.pointerType!=='mouse')autoFull(e)},true);
+document.addEventListener('click',autoFull,true);
+document.addEventListener('fullscreenchange',fsIcon);document.addEventListener('webkitfullscreenchange',fsIcon);fsIcon();
 $('#restart').addEventListener('click',function(){S=fresh();syncTg();title()});
 
 drawComp();drawPet();hideComp();title();
